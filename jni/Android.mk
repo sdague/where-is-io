@@ -23,7 +23,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := solarsym
 
-# LOCAL_CFLAGS := -DANDROID_NDK \
+LOCAL_CFLAGS := -DANDROID_NDK 
 #                -DDISABLE_IMPORTGL
 
 LOCAL_SRC_FILES := \
@@ -36,7 +36,8 @@ LOCAL_SRC_FILES := \
 	planets.c \
 	stellplanet.c \
 	tass17.c \
-	vsop87.c
+	vsop87.c \
+	export.c 
 
 
 LOCAL_LDLIBS := -lm -llog
