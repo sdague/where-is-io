@@ -1,7 +1,5 @@
 package net.dague.astro;
 
-import net.dague.astro.util.JovianMoons;
-import net.dague.astro.util.SolarSim;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +9,15 @@ public class JovianSpiral extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("IO", "got past create");        
+        Log.i("IO", "got past create");
         
-        SolarSim s = new SolarSim();
-        JovianMoons jv = s.getMoons(System.currentTimeMillis());
-        Log.i("IO", jv.toString());
-        setContentView(R.layout.main);
+        JovianGraphView jgv = new JovianGraphView(this);
+        setContentView(jgv);
+        jgv.requestFocus();
+    
+//        SolarSim s = new SolarSim();
+//        JovianMoons jv = s.getMoons(System.currentTimeMillis());
+//        Log.i("IO", jv.toString());
+//        setContentView(R.layout.main);
     }
 }

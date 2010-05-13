@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="background">#3500ffff</color>
+	<color name="jovian_graph_background">#ff000000</color>
+<color name="io">#ffffff00</color>
+<color name="ganymede">#ff0000ff</color>
+<color name="europa">#ff00ff00</color>
+<color name="callisto">#ffff0000</color>
+<color name="jupiter">#64888888</color>
+	
+</resources>

@@ -80,4 +80,9 @@ public class Vector3 {
 		prod = A.X * B.X + A.Y * B.Y + A.Z * B.Z;
 		return prod;
 	}
+	
+	public boolean isZero()
+	{
+		return (X == 0.0 && Y == 0.0 && Z == 0.0);
+	}
 }
