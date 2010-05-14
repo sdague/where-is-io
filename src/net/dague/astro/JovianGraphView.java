@@ -72,7 +72,7 @@ public class JovianGraphView extends View {
 		
 		canvas.drawRect(0, 0, getWidth(), getHeight(), background);
 		
-		JovianPoints jp = s.getMoonPoints(System.currentTimeMillis(), 1000 * 60 * 60 * 2, 120);
+		JovianPoints jp = s.getMoonPoints(System.currentTimeMillis(), 96);
 
 		float[] ipoints = jp.getIoPoints(getWidth(), getHeight());
 		canvas.drawPoints(ipoints, io);

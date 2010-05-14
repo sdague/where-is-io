@@ -1,5 +1,7 @@
 package net.dague.astro.util;
 
+import java.util.HashMap;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,11 +13,10 @@ import static android.provider.BaseColumns._ID;
 import static net.dague.astro.data.Constants.*;
 
 public class SolarSim {
-	private static String[] FROM = { _ID, BODY, TIME, X, Y, Z };
-	private static String ORDER_BY = TIME + " DESC" ;
-	private static String WHERE = BODY + "= ? and " + TIME + " = ?";
-
 	
+	private final long timestepMinutes = 30;
+	private final long timestepMils = timestepMinutes * 60 * 1000;
+
 	native double[] returnJD(double jd);
 	native double[] earthCoords(double jd);
 	native double[] jupiterCoords(double jd);
@@ -67,74 +68,47 @@ public class SolarSim {
 		return seperation;
 	}
 	
-	public JovianPoints getMoonPoints(long time, long timestep, int num)
+	private long hours2mils(long hours)
+	{
+		return hours * 60 * 60 * 1000;
+	}
+	
+	private long round2minutes(long raw, long minutes)
+	{
+		return raw - (raw % (minutes * 60 * 1000));
+	}
+	
+	public JovianPoints getMoonPoints(long time, long hours)
 	{
 		JovianPoints jp = new JovianPoints();
 		
-		long now = time - (time % (15 * 60 * 1000));
+		long now = round2minutes(time, timestepMinutes);
 		int i;
-		long end = time + (timestep * num);
-		for (i = 0; now < end; now += timestep, i++)
+		long end = time + hours2mils(hours);
+		
+		// get rid of old data
+		coords.purgeRecords(now);
+		
+		HashMap<Long, JovianMoons> dbmoons = coords.getRange(now, end);
+		
+		for (i = 0; now < end; now += timestepMils, i++)
 		{
-			JovianMoons j = getMoons(now);
-		    jp.add(j);
+			Long n = new Long(now);
+			if (dbmoons.containsKey(n)) {
+				jp.add(dbmoons.get(n));
+			} else {
+				JovianMoons j = getMoons(now);
+				coords.addCoords(now, j);
+				jp.add(j);
+			}
 		}
 		
 		return jp;
 	}
 	
-	public JovianMoons[] getMoons(long time, long timestep, long num)
-	{
-		JovianMoons[] jv = new JovianMoons[(int) num];
-		long now;
-		int i;
-		long end = time + (timestep * num);
-		for (i = 0, now = time; now < end; now += timestep, i++)
-		{
-			jv[i] = getMoons(now);			
-		}
-		return jv;
-	}
-	
-	private Vector3 getCoords(String body, long time)
-	{
-		Vector3 v = new Vector3();
-		// Log.i("IO", "Getting data for body: " + body + " at jd: " + jd);
-		SQLiteDatabase db = coords.getReadableDatabase();
-		String[] wherebits = {body, Long.toString(time)};
-		Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, wherebits, null, null, ORDER_BY);
-		while(cursor.moveToNext()) {
-			v.X = cursor.getDouble(3);
-			v.Y = cursor.getDouble(4);
-			v.Z = cursor.getDouble(5);
-			break;
-		}
-		cursor.close();
-		db.close();
-		return v;
-	}
-	
-	private void addCoords(String body, long time, Vector3 p) {
-		SQLiteDatabase db = coords.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put(BODY, body);
-		values.put(TIME, time);
-		values.put(X, p.X);
-		values.put(Y, p.Y);
-		values.put(Z, p.Z);
-		db.insertOrThrow(TABLE_NAME, null, values);
-		db.close();
-	}
-	
 	public Vector3 lookup(String body, long time)
-	{
-		Vector3 v = getCoords(body, time);
-		
+	{		
 		double jd = JD(time);
-		if (!v.isZero()) {
-			Log.i("DB", "Data was cached... using it");
-			return v;
-		}
 		
 		Log.i("DB", "Calculating new data for " + body + " at: " + jd);
 		Vector3 newv;
@@ -153,9 +127,6 @@ public class SolarSim {
 		} else {
 			newv = new Vector3();
 		}
-		
-		// cache this for later
-		addCoords(body, time, newv);
 		
 		return newv;		
 	}

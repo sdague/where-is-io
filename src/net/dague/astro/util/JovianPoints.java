@@ -5,7 +5,7 @@ import java.util.Vector;
 public class JovianPoints {
 	private Vector jp;
 	
-	double max = 0;
+	double max = 0.03;
 	double scale = 2.1;
 	
 	public JovianPoints()
@@ -15,8 +15,7 @@ public class JovianPoints {
 	
 	public void add(JovianMoons jm)
 	{
-		maxCheck(jm);
-
+		// maxCheck(jm);
 		jp.add(jm);
 	}
 	
