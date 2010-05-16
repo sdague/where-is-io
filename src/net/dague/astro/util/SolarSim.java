@@ -14,10 +14,10 @@ import static net.dague.astro.data.Constants.*;
 
 public class SolarSim {
 	
-	private final long timestepMinutes = 30;
+	private final long timestepMinutes = 60;
 	private final long timestepMils = timestepMinutes * 60 * 1000;
 
-	native double[] returnJD(double jd);
+	// native double[] returnJD(double jd);
 	native double[] earthCoords(double jd);
 	native double[] jupiterCoords(double jd);
 	native double[] ioCoords(double jd);
@@ -40,7 +40,7 @@ public class SolarSim {
 		// Vector3 jupiter = lookup("jupiter", jd);
 		
 		// this is the moon vector from the sun
-		Vector3 moon_abs = jupiter.add(moon);
+		// Vector3 moon_abs = jupiter.add(moon);
 		
 		// Avector is earth -> moon (no longer used)
 		// Cvector is earth -> jupiter
@@ -68,26 +68,14 @@ public class SolarSim {
 		return seperation;
 	}
 	
-	private long hours2mils(long hours)
-	{
-		return hours * 60 * 60 * 1000;
-	}
-	
-	private long round2minutes(long raw, long minutes)
-	{
-		return raw - (raw % (minutes * 60 * 1000));
-	}
-	
-	public JovianPoints getMoonPoints(long time, long hours)
-	{
-		JovianPoints jp = new JovianPoints();
-		
-		long now = round2minutes(time, timestepMinutes);
+	public JovianPoints getMoonPoints(long time, long hours, boolean nonblock)
+	{	
+		long now = TimeUtil.round2minutes(time, timestepMinutes);
 		int i;
-		long end = time + hours2mils(hours);
+		int size = 0;
+		long end = time + TimeUtil.hours2mils(hours);
 		
-		// get rid of old data
-		coords.purgeRecords(now);
+		JovianPoints jp = new JovianPoints(JD(now), JD(end));
 		
 		HashMap<Long, JovianMoons> dbmoons = coords.getRange(now, end);
 		
@@ -96,14 +84,25 @@ public class SolarSim {
 			Long n = new Long(now);
 			if (dbmoons.containsKey(n)) {
 				jp.add(dbmoons.get(n));
+				size++;
 			} else {
-				JovianMoons j = getMoons(now);
-				coords.addCoords(now, j);
-				jp.add(j);
+				if(!nonblock) {
+					JovianMoons j = getMoons(now);
+					coords.addCoords(now, j);
+					jp.add(j);
+				}
 			}
 		}
 		
+		jp.percent = size * 100 / i;
+		
 		return jp;
+	}
+	
+	public JovianMoons getMoonsAt(long time)
+	{
+		long now = TimeUtil.round2minutes(time, timestepMinutes);
+		return coords.get(now);
 	}
 	
 	public Vector3 lookup(String body, long time)

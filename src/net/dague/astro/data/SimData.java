@@ -9,6 +9,7 @@ import net.dague.astro.util.Vector3;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -32,6 +33,26 @@ public class SimData extends SQLiteOpenHelper {
 		// TODO Auto-generated constructor stub
 	}
 
+	public JovianMoons get(long time) 
+	{
+		JovianMoons j = new JovianMoons();
+		SQLiteDatabase db = getReadableDatabase();
+		String[] wherebits = {Long.toString(time)};
+		Cursor cursor = db.query(TABLE_NAME, FROM, WHERE_TIME, wherebits, null, null, ORDER_BY);
+
+		while(cursor.moveToNext()) {
+			long dbtime = cursor.getLong(1);
+			j.jd = SolarSim.JD(dbtime);
+			j.callisto = cursor.getDouble(2);
+			j.europa = cursor.getDouble(3);
+			j.ganymede = cursor.getDouble(4);
+			j.io = cursor.getDouble(5);
+		}
+		cursor.close();
+		db.close();
+		return j;
+	}
+	
 	public HashMap<Long, JovianMoons> getRange(long time, long until)
 	{
 		HashMap<Long, JovianMoons> jm = new HashMap<Long, JovianMoons>();
@@ -63,6 +84,12 @@ public class SimData extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	public void deleteAll() {
+		SQLiteDatabase db = getWritableDatabase();
+		db.delete(TABLE_NAME, null, null);
+		db.close();
+	}
+	
 	public void addCoords(long time, JovianMoons jm) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -71,7 +98,12 @@ public class SimData extends SQLiteOpenHelper {
 		values.put(CALLISTO, jm.callisto);
 		values.put(EUROPA, jm.europa);
 		values.put(GANYMEDE, jm.ganymede);
-		db.insertOrThrow(TABLE_NAME, null, values);
+		
+		try {
+			db.insertOrThrow(TABLE_NAME, null, values);
+		} catch (SQLException e) {
+			// This is probably a key collision exception, just ignore it
+		}
 		db.close();
 	}
 	

@@ -7,5 +7,7 @@
 <color name="europa">#ff00ff00</color>
 <color name="callisto">#ffff0000</color>
 <color name="jupiter">#64888888</color>
+<color name="nowline">#ffffaa00</color>
+<color name="moon">#ffffffff</color>
 	
 </resources>
