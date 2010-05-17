@@ -8,12 +8,15 @@ import net.dague.astro.util.JovianPoints;
 import net.dague.astro.util.SolarCalc;
 import net.dague.astro.util.SolarSim;
 import net.dague.astro.util.TimeUtil;
+import net.dague.astro.util.TouchMap;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class JovianGraphView extends View {
@@ -31,6 +34,8 @@ public class JovianGraphView extends View {
 	Paint moon;
 	
 	final float strokeWidth = 3;
+	
+	private TouchMap map;
 
 	public JovianGraphView(Context context) {
 		super(context);
@@ -164,15 +169,28 @@ public class JovianGraphView extends View {
 		
 		float[] ipoints = jp.getMoonLines(JovianMoons.IO, getWidth(), getHeight());
 		canvas.drawLines(ipoints, io);
+		addTouchPoints(ipoints, "Io");
 		
 		float[] epoints = jp.getMoonLines(JovianMoons.EUROPA, getWidth(), getHeight());
 		canvas.drawLines(epoints, europa);
+		addTouchPoints(epoints, "Europa");
 		
 		float[] gpoints = jp.getMoonLines(JovianMoons.GANYMEDE, getWidth(), getHeight());
 		canvas.drawLines(gpoints, ganymede);
+		addTouchPoints(gpoints, "Ganymede");
 		
 		float[] cpoints = jp.getMoonLines(JovianMoons.CALLISTO, getWidth(), getHeight());
 		canvas.drawLines(cpoints, callisto);
+		addTouchPoints(cpoints, "Callisto");
+	}
+	
+	private void addTouchPoints(float[] points, String value)
+	{
+		int x = 0;
+		int y = 1;
+		for (; x < points.length; x += 4, y += 4) {
+			map.addPoint((int)points[x], (int)points[y], value);
+		}
 	}
 	
 	private float nowPos()
@@ -200,6 +218,7 @@ public class JovianGraphView extends View {
 	public void onDraw(Canvas canvas)
 	{
 		SolarSim s = new SolarSim(this.getContext());
+		map = new TouchMap(getWidth());
 		drawBackground(canvas);
 		drawJupiter(canvas, JovianPoints.screenWidth());
 		drawMoonTracks(canvas, s);
@@ -207,8 +226,28 @@ public class JovianGraphView extends View {
 		drawMoons(canvas, s);
 		drawJupiterDisc(canvas, JovianPoints.screenWidth());
 	}
+
+	public boolean onTouchEvent(MotionEvent me) 
+	{
+		if (me.getAction() == MotionEvent.ACTION_DOWN) {
+			int jupiterWidth = (int)jupiter.getStrokeWidth() / 2;
+			int minY = (getWidth() / 2) - jupiterWidth;
+			int maxY = (getWidth() / 2) + jupiterWidth;
+			if (me.getY() > minY && me.getY() < maxY ) {
+				Log.i("IO", "Touched Jupiter");
+				return true;
+			}
+			
+			String body = map.getPoint((int)me.getX(), (int)me.getY());
+			if (body != null) {
+				Log.i("IO", "Touched " + body);
+			}
+		}
+		
+		return true;
+	}
 	
-	public int computedY(double value, int width)
+	private int computedY(double value, int width)
 	{
 		int Y = (int)(value);
 		return Y + width / 2;
