@@ -3,5 +3,8 @@
    <item android:id="@+id/about"
       android:title="@string/about_label"
       android:alphabeticShortcut="@string/about_shortcut" />
+   <item android:id="@+id/delete"
+      android:title="@string/delete_label"
+      android:alphabeticShortcut="@string/delete_shortcut" />
 </menu>
       

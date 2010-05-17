@@ -2,6 +2,8 @@
 <resources>
     <string name="hello">Hello World, JovianSpiral!</string>
     <string name="app_name">Where is Io</string>
+    <string name="delete_label">Reset Cache</string>
+    <string name="delete_shortcut">D</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
     <string name="about_title">About Where is Io - version 1.1</string>

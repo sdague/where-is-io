@@ -15,6 +15,9 @@
       	android:label="@string/about_title"
       	android:theme="@android:style/Theme.Dialog" >
 		</activity>
+		<activity android:name=".Details"
+      	android:theme="@android:style/Theme.Dialog" >
+		</activity>
         
 
     </application>

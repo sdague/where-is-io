@@ -10,6 +10,7 @@ import net.dague.astro.util.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.TouchMap;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -229,19 +230,24 @@ public class JovianGraphView extends View {
 
 	public boolean onTouchEvent(MotionEvent me) 
 	{
+		String body = null;
 		if (me.getAction() == MotionEvent.ACTION_DOWN) {
 			int jupiterWidth = (int)jupiter.getStrokeWidth() / 2;
-			int minY = (getWidth() / 2) - jupiterWidth;
-			int maxY = (getWidth() / 2) + jupiterWidth;
-			if (me.getY() > minY && me.getY() < maxY ) {
-				Log.i("IO", "Touched Jupiter");
-				return true;
-			}
+			int minX = (getWidth() / 2) - jupiterWidth;
+			int maxX = (getWidth() / 2) + jupiterWidth;
 			
-			String body = map.getPoint((int)me.getX(), (int)me.getY());
-			if (body != null) {
-				Log.i("IO", "Touched " + body);
+			if (me.getX() > minX && me.getX() < maxX ) {
+				body = "Jupiter";
+			} else {
+				body = map.getPoint((int)me.getX(), (int)me.getY());
 			}
+		}
+		if (body != null) {
+			Log.i("IO", "Touched " + body);
+			
+			Intent detailScreen = new Intent(this.getContext(), Details.class);
+			detailScreen.putExtra("net.dague.astro.DetailBody", body);
+			this.getContext().startActivity(detailScreen);
 		}
 		
 		return true;
