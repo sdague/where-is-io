@@ -23,6 +23,8 @@ public class Details extends Activity {
 		if (body.equals("Jupiter")) {
 			t.setText(R.string.jupiter_details);
 			i.setImageResource(R.drawable.jupiter);
+		} else if (body.equals("Callisto")) {
+			// i.setImageResource(R.drawable.
 		}
 	}
 }
