@@ -39,4 +39,12 @@ Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
     </string>
+    <string name="jupiter_details">\
+<b>Radius:</b> 11.209 Earths\n\
+<b>Mass:</b> 317.8 Earths\n
+\n
+Jupiter is the 5th planet from the Sun, and the largest in our solar system.\n
+\n\
+More info at: http://en.wikipedia.org/wiki/Jupiter
+</string>
 </resources>
