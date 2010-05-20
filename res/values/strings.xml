@@ -21,12 +21,27 @@ ratio of your device).  Jupiter's size is slightly exagerated (2x) for aesthetic
 This is a work in progress, expect to see additional functions rolled out
 over time.
 
-Copyright (c) 2010 - Sean Dague (http://dague.net)
+<b>License / Copyright</b>
 
-This software includes simulation code derived from Johannes Gajdosik\'s vsop87, elp82b, and l1 model
-implementations.
-Much thanks to his excellent work in porting Fortran models to C and making those available for
-general use.
+Copyright (c) 2010 Sean Dague
+
+Where is Io is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Where is Io is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+  
+You should have received a copy of the GNU General Public License
+along with Where is Io.  If not, see http://www.gnu.org/licenses/.
+
+This software includes simulation code derived from Johannes
+Gajdosik\'s vsop87, elp82b, and l1 model implementations.  Much thanks
+to his excellent work in porting Fortran models to C and making those
+available for general use.
 
 Copyright (c) 2006 Johannes Gajdosik
 
