@@ -13,6 +13,16 @@ Io".
 
 More information on the project can be found at http://dague.net/where-is-io
 
+== Building
+
+The source tree is an eclipse project, and should be buildable in
+eclipse with the following caveat:
+
+For my convenience I added an ndk builder for the .c code.  The ndk
+build environment doesn't mix super cleanly with eclipse, so if you
+want to build this yourself you'll need to mess with 
+.externalToolBuilders/JNI Builder.launch
+
 == License
 
 The code for the code Android application is under GPLv3.  The
