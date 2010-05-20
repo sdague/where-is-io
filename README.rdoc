@@ -1,0 +1,29 @@
+= Where is Io -- Astronomy in your pocket
+
+== Description
+
+Where is Io is an Android application for determining which moons of
+Jupiter you are currently viewing.  It numerically calculates the
+positions of all the moons as well the Earth and Jupiter, does the
+projection from Earth's perspective, and pulls it all together in a
+familiar spiral graph.
+
+This is available in the Android Market if you search for "Where is
+Io".
+
+More information on the project can be found at http://dague.net/where-is-io
+
+== License
+
+The code for the code Android application is under GPLv3.  The
+application includes 2 additional sources of code.
+
+The main simulator is the work of Johannes Gajdosik as found in the
+Stellarium source tree.  Those files are provided under the revised
+BSD license that they are licensed under.  I did a jni wrapper on this
+code for the application.
+
+There is also an included SunriseSunset.java which is provided by John
+Tauxe as public domain:
+http://www.neptuneandco.com/~jtauxe/bits/index.html
+
