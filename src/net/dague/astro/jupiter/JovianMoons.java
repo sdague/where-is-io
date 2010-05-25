@@ -17,7 +17,10 @@
   along with Where is Io.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.dague.astro.util;
+package net.dague.astro.jupiter;
+
+import net.dague.astro.sim.SolarSim;
+import net.dague.astro.util.TimeUtil;
 
 public class JovianMoons {
 	public static final int CALLISTO = 0;
@@ -33,7 +36,16 @@ public class JovianMoons {
 	
 	public JovianMoons()
 	{
-		jd = SolarSim.JD(System.currentTimeMillis());
+		jd = TimeUtil.mils2JD(System.currentTimeMillis());
+		callisto = 0;
+		io = 0;
+		ganymede = 0;
+		europa = 0;
+	}
+	
+	public JovianMoons(double t)
+	{
+		jd = t;
 		callisto = 0;
 		io = 0;
 		ganymede = 0;

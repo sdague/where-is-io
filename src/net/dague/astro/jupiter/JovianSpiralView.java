@@ -25,13 +25,10 @@ import net.dague.astro.Details;
 import net.dague.astro.R;
 import net.dague.astro.R.color;
 import net.dague.astro.R.drawable;
+import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.AstroConst;
 import net.dague.astro.util.Convert;
-import net.dague.astro.util.JovianCalculator;
-import net.dague.astro.util.JovianMoons;
-import net.dague.astro.util.JovianPoints;
 import net.dague.astro.util.SolarCalc;
-import net.dague.astro.util.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.TouchMap;
 import android.content.Context;
@@ -47,7 +44,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callback {
-	
+
+	public final static int START_HOURS = 12;
+	public final static int END_HOURS = 96;
+	public final static long TIMESTEP_MINUTES = 60;
+	public final static long TIMESTEP_MILS = TIMESTEP_MINUTES * 60 * 1000;
 	
 	Paint background;
 	Paint europa;
@@ -63,6 +64,8 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 	private TouchMap map;
 	
 	private JovianThread thread;
+	
+	private JovianCalculator calc;
 
 	public JovianSpiralView(Context context) {
 		super(context);
@@ -71,17 +74,15 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		holder.addCallback(this);
 
 	        // create thread only; it's started in surfaceCreated()
-		thread = new JovianThread(holder, context);
-
+		calc = new JovianCalculator(context);
+		thread = new JovianThread(holder, context, calc);
 		
 		setFocusable(true);
 	}
 	
-
-	public void newData() 
+	public static long now(long time)
 	{
-		// tell the thread about the new data
-		thread.interrupt();
+		return TimeUtil.round2minutes(time, TIMESTEP_MINUTES);
 	}
 
 	public boolean onTouchEvent(MotionEvent me) 
@@ -119,6 +120,8 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		// TODO Auto-generated method stub
         thread.setRunning(true);
         thread.start();
+        calc.setRunning(true);
+        calc.start();
 	}
 
 	@Override

@@ -19,13 +19,13 @@
 
 package net.dague.astro;
 
-import net.dague.astro.data.SimData;
+import net.dague.astro.data.JupiterData;
+import net.dague.astro.jupiter.JovianCalculator;
+import net.dague.astro.jupiter.JovianMoonSet;
 import net.dague.astro.jupiter.JovianSpiralView;
 import net.dague.astro.jupiter.JovianThread;
-import net.dague.astro.util.JovianCalculator;
-import net.dague.astro.util.JovianPoints;
+import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.SolarCalc;
-import net.dague.astro.util.SolarSim;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,20 +51,12 @@ public class JovianSpiral extends Activity implements OnClickListener {
     	setContentView(jgv);
     	
         jgv.requestFocus();
-
-    	precalcData();
-    
     }
     
 	@Override
 	public void onClick(DialogInterface dialog, int arg1) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	private void precalcData() {
-		SolarSim sim = new SolarSim(this);
-		new Thread(new JovianCalculator(sim, jgv, JovianThread.startTime(), 120)).start();
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -82,9 +74,8 @@ public class JovianSpiral extends Activity implements OnClickListener {
 
 	private void deleteCache()
 	{
-		SimData d = new SimData(this);
+		JupiterData d = new JupiterData(this);
 		d.deleteAll();
-		precalcData();
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {

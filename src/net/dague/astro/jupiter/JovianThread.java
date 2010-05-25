@@ -1,11 +1,9 @@
 package net.dague.astro.jupiter;
 
 import net.dague.astro.R;
+import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.AstroConst;
 import net.dague.astro.util.Convert;
-import net.dague.astro.util.JovianMoons;
-import net.dague.astro.util.JovianPoints;
-import net.dague.astro.util.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.TouchMap;
 import android.content.Context;
@@ -20,9 +18,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class JovianThread extends Thread {
-	private final static int START_HOURS = 12;
-	private final static int END_HOURS = 96;
-	private static final int STEP_SIZE = 0;
 	
 	private boolean running;
 	// the height and width of the canvas
@@ -56,20 +51,22 @@ public class JovianThread extends Thread {
 	final int START = 0;
 	final int RUNNING = 1;
 	final int DONE = 2;
+	
+	
 	final int stepSize = 4;
 	int progress;
 	
 	int state;
+	private JovianCalculator calc;
 	
-    public JovianThread(SurfaceHolder surfaceHolder, Context context) {
+    public JovianThread(SurfaceHolder surfaceHolder, Context context, JovianCalculator calc) {
 //            Handler handler) {
         // get handles to some important objects
         this.surfaceHolder = surfaceHolder;
         //this.handler = handler;
         this.context = context;
+        this.calc = calc;
 
-		sim = new SolarSim(context);
-        
 		state = START;
 		progress = stepSize;
     	setupPaint();
@@ -163,11 +160,11 @@ public class JovianThread extends Thread {
                 }
             }
 			try {
-				if (state == DONE) {
-					sleep(120000);
-				} else {
-					sleep (sleepTime());
-				}
+//				if (state == DONE) {
+//					sleep(120000);
+//				} else {
+					sleep (120000); // sleepTime());
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				Log.i("IO", "thread sleep interupted... I don't whink we care");
@@ -186,10 +183,10 @@ public class JovianThread extends Thread {
     	return delta;
     }
     
-	private void drawMoons(Canvas canvas, SolarSim s)
+	private void drawMoons(Canvas canvas)
 	{
-		JovianMoons jm = s.getMoonsAt(System.currentTimeMillis());
-		float width = JovianPoints.screenWidth();
+		JovianMoons jm = calc.getMoonsAt(System.currentTimeMillis());
+		float width = JovianMoonSet.screenWidth();
 		
 		for (int i = 0; i < 4; i++) {
 			float moonpos = (float) jm.get(i);
@@ -231,9 +228,11 @@ public class JovianThread extends Thread {
 		canvas.drawBitmap(jupiterBitmap, null, jrect, backgroundPaint);
 	}
 	
-	private void drawMoonTracks(Canvas canvas, SolarSim s, int hours)
+	// Get the moon tracks out of the calculation thread 
+	
+	private void drawMoonTracks(Canvas canvas, int hours)
 	{
-		JovianPoints jp = s.getMoonPoints(startTime() , hours, true);
+		JovianMoonSet jp = calc.getMoonPoints(startTime(), hours);
 		
 		if (jp.percent == 0)
 			return;
@@ -271,12 +270,12 @@ public class JovianThread extends Thread {
 	
 	private float nowPos()
 	{
-		return scale((float) START_HOURS / (float)END_HOURS * height); 
+		return scale((float) JovianSpiralView.START_HOURS / (float)JovianSpiralView.END_HOURS * height); 
 	}
 	
 	public static long startTime()
 	{
-		return System.currentTimeMillis() - TimeUtil.hours2mils(START_HOURS);
+		return System.currentTimeMillis() - TimeUtil.hours2mils(JovianSpiralView.START_HOURS);
 	}
 	
 
@@ -304,9 +303,9 @@ public class JovianThread extends Thread {
 	{
 		float ratio = (float)height / (float)width;
 		if (ratio < 1) {
-			return (int)(END_HOURS * ratio * ratio);
+			return (int)(JovianSpiralView.END_HOURS * ratio * ratio);
 		} else {
-			return END_HOURS;
+			return JovianSpiralView.END_HOURS;
 		}
 	}
 	
@@ -314,18 +313,25 @@ public class JovianThread extends Thread {
 	private void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		map = new TouchMap(width);
+		Log.i("IO","drew background");
 		drawBackground(canvas);
-		drawJupiter(canvas, JovianPoints.screenWidth());
-		if (state == START) {
-			state = RUNNING;
-			lastFrameTime = System.currentTimeMillis();
-		} else {
-			drawMoonTracks(canvas, sim, progress);
+		Log.i("IO", "draw jupiter");
+		drawJupiter(canvas, JovianMoonSet.screenWidth());
+//		if (state == START) {
+//			state = RUNNING;
+//			lastFrameTime = System.currentTimeMillis();
+//		} else {
+		Log.i("IO", "draw moon tracks");
+			drawMoonTracks(canvas, end_hours());
+			Log.i("IO", "draw now line");
 			drawNowLine(canvas);
-			drawMoons(canvas, sim);
-			incrementProgress();
-		}
-		drawJupiterDisc(canvas, JovianPoints.screenWidth());
+			Log.i("IO", "draw moons");
+			drawMoons(canvas);
+//			incrementProgress();
+//		}
+			Log.i("IO", "draw disc");
+		drawJupiterDisc(canvas, JovianMoonSet.screenWidth());
+		Log.i("IO", "drawing done");
 	}
 	
 	private void incrementProgress() {

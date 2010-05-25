@@ -19,6 +19,7 @@
 
 package net.dague.astro.util;
 
+import net.dague.astro.sim.SolarSim;
 import android.view.View;
 
 public class SolarCalc {

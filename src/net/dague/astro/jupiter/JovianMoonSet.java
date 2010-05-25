@@ -17,11 +17,12 @@
   along with Where is Io.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.dague.astro.util;
+package net.dague.astro.jupiter;
 
 import java.util.Vector;
 
-public class JovianPoints {
+
+public class JovianMoonSet {
 	private Vector<JovianMoons> jp;
 	
 	// max is actually an AU size
@@ -32,7 +33,7 @@ public class JovianPoints {
 	double starttime = 300000;
 	double endtime;
 	
-	public JovianPoints(double start, double end)
+	public JovianMoonSet(double start, double end)
 	{
 		starttime = start;
 		endtime = end;

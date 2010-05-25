@@ -29,4 +29,12 @@ public class TimeUtil {
 	{
 		return raw - (raw % (minutes * 60 * 1000));
 	}
+	
+
+	// Basic conversion to julian date
+	public static double mils2JD(long mils)
+	{
+		return ((mils / (86400.0 * 1000.0) ) + 2440587.5);
+	}
+	
 }

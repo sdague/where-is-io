@@ -14,7 +14,7 @@
 #include <jni.h>
 // #include "ArrayHandler.h"
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_earthCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_earthCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double earth[3];
     get_earth_helio_coordsv(jd, earth);
 
@@ -24,7 +24,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_earthCoords(JNIEnv *env, jobject
     return answer;
 }
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_jupiterCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_jupiterCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double jupiter[3];
     get_jupiter_helio_coordsv(jd, jupiter);
 
@@ -35,7 +35,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_jupiterCoords(JNIEnv *env, jobje
 }
 
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_ioCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_ioCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double io[3];
     get_io_parent_coordsv(jd, io);
 
@@ -45,7 +45,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_ioCoords(JNIEnv *env, jobject jo
     return answer;
 }
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_europaCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_europaCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double europa[3];
     get_europa_parent_coordsv(jd, europa);
 
@@ -55,7 +55,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_europaCoords(JNIEnv *env, jobjec
     return answer;
 }
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_ganymedeCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_ganymedeCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double ganymede[3];
     get_ganymede_parent_coordsv(jd, ganymede);
 
@@ -65,7 +65,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_ganymedeCoords(JNIEnv *env, jobj
     return answer;
 }
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_callistoCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_callistoCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double callisto[3];
     get_callisto_parent_coordsv(jd, callisto);
 
@@ -76,7 +76,7 @@ jdoubleArray Java_net_dague_astro_util_SolarSim_callistoCoords(JNIEnv *env, jobj
 }
 
 
-jdoubleArray Java_net_dague_astro_util_SolarSim_returnJD(JNIEnv *env, jobject jobj, jdouble jd) {
+jdoubleArray Java_net_dague_astro_sim_SolarSim_returnJD(JNIEnv *env, jobject jobj, jdouble jd) {
 
     /* jdouble ret; */
 

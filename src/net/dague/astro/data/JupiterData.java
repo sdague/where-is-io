@@ -22,8 +22,9 @@ package net.dague.astro.data;
 import java.util.HashMap;
 import java.util.Vector;
 
-import net.dague.astro.util.JovianMoons;
-import net.dague.astro.util.SolarSim;
+import net.dague.astro.jupiter.JovianMoons;
+import net.dague.astro.sim.SolarSim;
+import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.Vector3;
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,7 +36,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import static android.provider.BaseColumns._ID;
 import static net.dague.astro.data.Constants.*;
 
-public class SimData extends SQLiteOpenHelper {
+public class JupiterData extends SQLiteOpenHelper {
 	
 	private static String[] FROM = { _ID, TIME, CALLISTO, EUROPA, GANYMEDE, IO };
 	private static String ORDER_BY = TIME + " DESC" ;
@@ -46,7 +47,7 @@ public class SimData extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "astro.db";
 	private static final int DATABASE_VERSION = 1;
 
-	public SimData(Context context) {
+	public JupiterData(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
 		// TODO Auto-generated constructor stub
@@ -61,7 +62,7 @@ public class SimData extends SQLiteOpenHelper {
 
 		while(cursor.moveToNext()) {
 			long dbtime = cursor.getLong(1);
-			j.jd = SolarSim.JD(dbtime);
+			j.jd = TimeUtil.mils2JD(dbtime);
 			j.callisto = cursor.getDouble(2);
 			j.europa = cursor.getDouble(3);
 			j.ganymede = cursor.getDouble(4);
@@ -84,7 +85,7 @@ public class SimData extends SQLiteOpenHelper {
 		while(cursor.moveToNext()) {
 			JovianMoons j = new JovianMoons();
 			long dbtime = cursor.getLong(1);
-			j.jd = SolarSim.JD(dbtime);
+			j.jd = TimeUtil.mils2JD(dbtime);
 			j.callisto = cursor.getDouble(2);
 			j.europa = cursor.getDouble(3);
 			j.ganymede = cursor.getDouble(4);
