@@ -118,10 +118,10 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-        thread.setRunning(true);
-        thread.start();
         calc.setRunning(true);
         calc.start();
+        thread.setRunning(true);
+        thread.start();
 	}
 
 	@Override
@@ -129,9 +129,11 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		// TODO Auto-generated method stub
 		boolean retry = true;
 		thread.setRunning(false);
+		calc.setRunning(false);
 		while (retry) {
 			try {
 				thread.join();
+				calc.join();
 				retry = false;
 			} catch (InterruptedException e) {
 			}

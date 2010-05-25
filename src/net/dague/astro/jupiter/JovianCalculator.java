@@ -87,14 +87,17 @@ public class JovianCalculator extends Thread {
 		int total = 0;
 		int found = 0;
 		synchronized(cache) {
+			// Log.i("IO", "Cache dump: " + cache.toString());
 			for (; when < stop; when += TIMESTEP) {
 				Long look = new Long(when);
 				if (cache.containsKey(look)) {
+					// Log.i("IO", "found data for " + look);
 					set.add(cache.get(look));
 					found++;
 				}
+				total++;
 			}
-			total++;
+			
 		}
 		
 		set.percent = (found * 100) / total;

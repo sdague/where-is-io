@@ -21,6 +21,8 @@ package net.dague.astro.jupiter;
 
 import java.util.Vector;
 
+import net.dague.astro.util.TimeUtil;
+
 
 public class JovianMoonSet {
 	private Vector<JovianMoons> jp;
@@ -30,13 +32,12 @@ public class JovianMoonSet {
 	public final static double scale = 2.1;
 	public int percent = 0;
 	
-	double starttime = 300000;
+	double starttime;
 	double endtime;
 	
-	public JovianMoonSet(double start, double end)
-	{
-		starttime = start;
-		endtime = end;
+	public JovianMoonSet(long start, long end) {
+		starttime = TimeUtil.mils2JD(start);
+		endtime = TimeUtil.mils2JD(end);
 		jp = new Vector<JovianMoons>();
 	}
 	
@@ -69,6 +70,9 @@ public class JovianMoonSet {
 	
 	public float[] getMoonLines(int moon, int width, int height)
 	{
+		if (jp.size() < 2) {
+			return new float[0];
+		}
 		float[] results = new float[jp.size() * 4 - 4];
 		int end = jp.size() - 1;
 		for (int i = 0; i < end; i++) {

@@ -146,10 +146,12 @@ public class JovianThread extends Thread {
         while (running) {
             Canvas c = null;
             try {
-                c = surfaceHolder.lockCanvas(null);
+                c = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
                     draw(c);
                 }
+                
+                // surfaceHolder.unlockCanvasAndPost(c);
 
 			} finally {
                 // do this in a finally so that if an exception is thrown
@@ -163,12 +165,12 @@ public class JovianThread extends Thread {
 //				if (state == DONE) {
 //					sleep(120000);
 //				} else {
-					sleep (120000); // sleepTime());
+					sleep (500); // sleepTime());
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				Log.i("IO", "thread sleep interupted... I don't whink we care");
-			}
+		}
         }
     }
     
@@ -234,26 +236,35 @@ public class JovianThread extends Thread {
 	{
 		JovianMoonSet jp = calc.getMoonPoints(startTime(), hours);
 		
+		
+//		Log.i("IO", "Percent " + jp.percent);
+		
 		if (jp.percent == 0)
 			return;
 		
-		if (hours >= end_hours()  && jp.percent > 99) 
-			state = DONE;
+//		if (hours >= end_hours()  && jp.percent > 99) 
+//			state = DONE;
 		
 		int drawHeight = height * hours / end_hours();
 		
 		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
+
+		Log.i("IO", "Point size" + ipoints.length);
+//		for (int i = 0; i < ipoints.length; i++) {
+//			Log.i("Points", "points: " + ipoints[i]);
+//		}
+//		Log.i("IO", "IO points: " + ipoints);
 		canvas.drawLines(ipoints, io);
 		addTouchPoints(ipoints, "Io");
-		
+//		
 		float[] epoints = jp.getMoonLines(JovianMoons.EUROPA, width, drawHeight);
 		canvas.drawLines(epoints, europa);
 		addTouchPoints(epoints, "Europa");
-		
+//		
 		float[] gpoints = jp.getMoonLines(JovianMoons.GANYMEDE, width, drawHeight);
 		canvas.drawLines(gpoints, ganymede);
 		addTouchPoints(gpoints, "Ganymede");
-		
+//		
 		float[] cpoints = jp.getMoonLines(JovianMoons.CALLISTO, width, drawHeight);
 		canvas.drawLines(cpoints, callisto);
 		addTouchPoints(cpoints, "Callisto");
@@ -313,25 +324,26 @@ public class JovianThread extends Thread {
 	private void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		map = new TouchMap(width);
-		Log.i("IO","drew background");
+		// Log.i("IO","drew background");
 		drawBackground(canvas);
-		Log.i("IO", "draw jupiter");
+		// Log.i("IO", "draw jupiter");
 		drawJupiter(canvas, JovianMoonSet.screenWidth());
-//		if (state == START) {
-//			state = RUNNING;
-//			lastFrameTime = System.currentTimeMillis();
-//		} else {
-		Log.i("IO", "draw moon tracks");
+		
+////		if (state == START) {
+////			state = RUNNING;
+////			lastFrameTime = System.currentTimeMillis();
+////		} else {
+//		// Log.i("IO", "draw moon tracks");
 			drawMoonTracks(canvas, end_hours());
-			Log.i("IO", "draw now line");
+			// Log.i("IO", "draw now line");
 			drawNowLine(canvas);
-			Log.i("IO", "draw moons");
+			// Log.i("IO", "draw moons");
 			drawMoons(canvas);
-//			incrementProgress();
-//		}
-			Log.i("IO", "draw disc");
+////			incrementProgress();
+////		}
+		// 	Log.i("IO", "draw disc");
 		drawJupiterDisc(canvas, JovianMoonSet.screenWidth());
-		Log.i("IO", "drawing done");
+		// Log.i("IO", "drawing done");
 	}
 	
 	private void incrementProgress() {
