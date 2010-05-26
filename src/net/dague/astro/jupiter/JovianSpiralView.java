@@ -74,8 +74,6 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		holder.addCallback(this);
 
 	        // create thread only; it's started in surfaceCreated()
-		calc = new JovianCalculator(context);
-		thread = new JovianThread(holder, context, calc);
 		
 		setFocusable(true);
 	}
@@ -112,12 +110,15 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
             int height) {
 		thread.setSurfaceSize(width, height);
+		thread.interrupt();
 
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
+		calc = new JovianCalculator(this.getContext());
+		thread = new JovianThread(holder, this.getContext(), calc);
         calc.setRunning(true);
         calc.start();
         thread.setRunning(true);
@@ -129,7 +130,10 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		// TODO Auto-generated method stub
 		boolean retry = true;
 		thread.setRunning(false);
+		thread.interrupt();
 		calc.setRunning(false);
+		calc.interrupt();
+		Log.i("IO", "Surface destroyed!");
 		while (retry) {
 			try {
 				thread.join();
@@ -140,4 +144,9 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		}
 	}
 
+	public void pause() {
+		// TODO Auto-generated method stub
+//		thread.p
+//		calc.suspend();
+	}
 }

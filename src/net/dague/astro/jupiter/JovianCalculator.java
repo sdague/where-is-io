@@ -185,7 +185,11 @@ public class JovianCalculator extends Thread {
     				data.addCoords(time, jm);
     				cache.put(new Long(time), jm);
     				// if we got new data, send a signal
-    				
+    				try {
+    					notifyAll();
+    				} catch (IllegalMonitorStateException e) {
+    					// don't care
+    				}
     			}
     		}
     	}

@@ -162,15 +162,16 @@ public class JovianThread extends Thread {
                 }
             }
 			try {
-//				if (state == DONE) {
-//					sleep(120000);
-//				} else {
-					sleep (500); // sleepTime());
-				
+////				if (state == DONE) {
+////					sleep(120000);
+////				} else {
+//				// calc.wait(500);
+				sleep (500); // sleepTime());
+//				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+//				// TODO Auto-generated catch block
 				Log.i("IO", "thread sleep interupted... I don't whink we care");
-		}
+			}
         }
     }
     
@@ -249,7 +250,7 @@ public class JovianThread extends Thread {
 		
 		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
 
-		Log.i("IO", "Point size" + ipoints.length);
+		//Log.i("IO", "Point size" + ipoints.length);
 //		for (int i = 0; i < ipoints.length; i++) {
 //			Log.i("Points", "points: " + ipoints[i]);
 //		}

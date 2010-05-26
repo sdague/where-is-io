@@ -51,6 +51,7 @@ public class JovianSpiral extends Activity implements OnClickListener {
     	setContentView(jgv);
     	
         jgv.requestFocus();
+        
     }
     
 	@Override
@@ -58,6 +59,11 @@ public class JovianSpiral extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+    protected void onPause() {
+        super.onPause();
+        // jgv.pause(); // pause game when Activity pauses
+    }
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
