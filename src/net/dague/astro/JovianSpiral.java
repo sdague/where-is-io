@@ -27,6 +27,8 @@ import net.dague.astro.jupiter.JovianThread;
 import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.SolarCalc;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
@@ -40,6 +42,8 @@ import android.view.View;
 
 public class JovianSpiral extends Activity implements OnClickListener {
 	
+	static final int DIALOG_LOADING = 1;
+	
 	JovianSpiralView jgv;
     /** Called when the activity is first created. */
     @Override
@@ -51,7 +55,22 @@ public class JovianSpiral extends Activity implements OnClickListener {
     	setContentView(jgv);
     	
         jgv.requestFocus();
-        
+    }
+    
+    protected Dialog onCreateDialog(int id) {
+        ProgressDialog dialog;
+        switch(id) {
+        case DIALOG_LOADING:
+        	dialog = new ProgressDialog(this);
+        	dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        	dialog.setMessage("Loading...");
+        	dialog.setCancelable(false);
+            // do the work to define the pause Dialog
+            break;
+        default:
+            dialog = null;
+        }
+        return dialog;
     }
     
 	@Override

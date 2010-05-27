@@ -142,7 +142,7 @@ public class JovianThread extends Thread {
 		
 		timeLine = new Paint();
 		timeLine.setColor(context.getResources().getColor(
-					R.color.moon));
+					R.color.timeline));
 		timeLine.setStrokeWidth(0);
 		
 		timeText = new Paint();
@@ -220,13 +220,13 @@ public class JovianThread extends Thread {
 		
 		for (int hours = hourInc; hours < (end_hours() - hourInc); hours += hourInc ) {
 			float y = time2y(now + TimeUtil.hours2mils(hours));
-			float x = 5;
+			float x = width - 40;
 			String text = "+" + hours + "h";
 
-			canvas.drawLine(0, y, x, y, timeLine);
+			canvas.drawLine(0, y, width, y, timeLine);
 			Rect r = new Rect();
 			moon.getTextBounds(text, 0, text.length(), r);
-			canvas.drawText(text, x * 1.5f, y - r.centerY() - 1, timeText);
+			canvas.drawText(text, width - 30, y - r.centerY() - 1, timeText);
 		}
 	}
 	

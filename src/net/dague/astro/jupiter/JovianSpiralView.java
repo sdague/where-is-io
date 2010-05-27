@@ -80,8 +80,7 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		calc.setHandler(thread.getHandler());
 		thread.start();
         calc.start();
-        
-		setFocusable(true);
+		setFocusable(true);        
 	}
 	
 	public static long now(long time)

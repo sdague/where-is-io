@@ -7,51 +7,41 @@
     <string name="close_label">Close</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
-    <string name="about_title">About Where is Io - version 1.2</string>
+    <string name="about_title">About Where is Io - version 1.3</string>
     <string name="about_text">
 Where is Io lets you know where the 4 galliean satellites of Jupiter are
 at any given time.  Even through only 8x binoculars you can make out these
-4 moons on nights when Jupiter is up.
-
+4 moons on nights when Jupiter is up.\n
 The portrait view shows a 4 day window of time, with the orange line 
 representing the current state.  In landscape view, you get a close up on
 the first portion of the graph (total time will vary based on the aspect
-ratio of your device).  Jupiter's size is slightly exagerated (2x) for aesthetics.
-
+ratio of your device).  Jupiter's size is slightly exagerated (2x) for aesthetics.\n
 This is a work in progress, expect to see additional functions rolled out
-over time.
-
-<b>License / Copyright</b>
-
-Copyright (c) 2010 Sean Dague
-
+over time.\n
+<b>License / Copyright</b>\n
+Copyright (c) 2010 Sean Dague\n
 Where is Io is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
+(at your option) any later version.\n
 Where is Io is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
-  
+General Public License for more details.\n
 You should have received a copy of the GNU General Public License
-along with Where is Io.  If not, see http://www.gnu.org/licenses/.
-
+along with Where is Io.  If not, see http://www.gnu.org/licenses/.\n
+Full source code available at http://github.com/sdague/where-is-io\n
 This software includes simulation code derived from Johannes
 Gajdosik\'s vsop87, elp82b, and l1 model implementations.  Much thanks
 to his excellent work in porting Fortran models to C and making those
-available for general use.
-
-Copyright (c) 2006 Johannes Gajdosik
-
+available for general use.\n
+Copyright (c) 2006 Johannes Gajdosik\n
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the \"Software\"),
 to deal in the Software without restriction, including without limitation
 the rights to use, copy, modify, merge, publish, distribute, sublicense,
 and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
+Software is furnished to do so, subject to the following conditions:\n
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
     </string>
