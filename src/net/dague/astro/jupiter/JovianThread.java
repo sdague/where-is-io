@@ -80,7 +80,7 @@ public class JovianThread extends Thread {
         		if (running) {
         			Log.i("IO","About to draw");
         			draw();
-        			sendEmptyMessageDelayed(0, 5000);
+        			sendEmptyMessageDelayed(0, 30000);
         		}
         }};
         

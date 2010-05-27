@@ -38,6 +38,7 @@ public class JovianCalculator extends Thread {
 
 	long start;
 	long endHours;
+	long safeUntil;
 	
 	SolarSim sim;
 	JupiterData data;
@@ -58,6 +59,7 @@ public class JovianCalculator extends Thread {
 		END_HOURS = JovianSpiralView.END_HOURS;
 		TIMESTEP = JovianSpiralView.TIMESTEP_MILS;
 		cache = data.getRange(startTime(), endTime());
+		safeUntil = startTime();
 	}
 	
 	public void setHandler(Handler h)
@@ -179,17 +181,19 @@ public class JovianCalculator extends Thread {
 	}
 	
     private void calcData() {
-    	long start = startTime();
     	long end = endTime();
-    	for (long time = start; time < end; time += TIMESTEP) {
+    	for (long time = safeUntil; time < end; time += TIMESTEP) {
     		synchronized(cache) {
     			if (!cache.containsKey(new Long(time))) {
     				Log.i("IO","Calculate moons for " + time);
     				JovianMoons jm = calcMoons(time);
     				data.addCoords(time, jm);
     				cache.put(new Long(time), jm);
+    				
     			}
     		}
+    		safeUntil = time;
+    		
     		handler.sendEmptyMessage(0);
     		if(!running) {
     			return;
@@ -211,7 +215,8 @@ public class JovianCalculator extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true) {
-			calcData();
+			if(running) 
+				calcData();
 			try {
 				sleep(TIMESTEP);
 			} catch (InterruptedException e) {

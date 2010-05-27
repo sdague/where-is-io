@@ -127,7 +127,7 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 
 		
         thread.setRunning(true);
-
+        thread.getHandler().sendEmptyMessage(0);
 
         calc.setRunning(true);
 
