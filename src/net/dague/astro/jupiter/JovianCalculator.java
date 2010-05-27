@@ -70,7 +70,7 @@ public class JovianCalculator extends Thread {
 	
 	private long endTime()
 	{
-		return round(System.currentTimeMillis() + TimeUtil.hours2mils(END_HOURS));
+		return round(System.currentTimeMillis() + TimeUtil.hours2mils(END_HOURS + 10));
 	}
 	
 	private long startTime()
@@ -86,7 +86,7 @@ public class JovianCalculator extends Thread {
 	public JovianMoonSet getMoonPoints(long time, long hours)
 	{
 		long when = round(time);
-		long stop = when + TimeUtil.hours2mils(hours);
+		long stop = when + TimeUtil.hours2mils(hours + 1);
 		
 		JovianMoonSet set = new JovianMoonSet(when, stop);
 		
@@ -189,12 +189,11 @@ public class JovianCalculator extends Thread {
     				JovianMoons jm = calcMoons(time);
     				data.addCoords(time, jm);
     				cache.put(new Long(time), jm);
-    				
+    	    		handler.sendEmptyMessage(0);
     			}
     		}
     		safeUntil = time;
     		
-    		handler.sendEmptyMessage(0);
     		if(!running) {
     			return;
     		}
