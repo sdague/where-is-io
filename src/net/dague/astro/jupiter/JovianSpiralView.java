@@ -64,7 +64,6 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 	private TouchMap map;
 	
 	private JovianThread thread;
-	
 	private JovianCalculator calc;
 
 	public JovianSpiralView(Context context) {
@@ -73,8 +72,15 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(this);
 
+		Log.i("IO","started a new spiral view");
 	        // create thread only; it's started in surfaceCreated()
-		
+
+		calc = new JovianCalculator(getContext());
+		thread = new JovianThread(holder, getContext(), calc);
+		calc.setHandler(thread.getHandler());
+		thread.start();
+        calc.start();
+        
 		setFocusable(true);
 	}
 	
@@ -110,19 +116,21 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
             int height) {
 		thread.setSurfaceSize(width, height);
-		thread.interrupt();
+		// thread.interrupt();
 
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		calc = new JovianCalculator(this.getContext());
-		thread = new JovianThread(holder, this.getContext(), calc);
-        calc.setRunning(true);
-        calc.start();
+		Log.i("IO", "Surface created");
+
+		
         thread.setRunning(true);
-        thread.start();
+
+
+        calc.setRunning(true);
+
 	}
 
 	@Override
@@ -130,23 +138,18 @@ public class JovianSpiralView extends SurfaceView implements SurfaceHolder.Callb
 		// TODO Auto-generated method stub
 		boolean retry = true;
 		thread.setRunning(false);
-		thread.interrupt();
 		calc.setRunning(false);
-		calc.interrupt();
-		Log.i("IO", "Surface destroyed!");
-		while (retry) {
-			try {
-				thread.join();
-				calc.join();
-				retry = false;
-			} catch (InterruptedException e) {
-			}
-		}
-	}
-
-	public void pause() {
-		// TODO Auto-generated method stub
-//		thread.p
-//		calc.suspend();
+		
+//		thread.getHandler().sendEmptyMessage(1);
+//		Log.i("IO", "Surface destroyed!");
+//		while (retry) {
+//			try {
+//				thread.join();
+//				calc.join();
+//				retry = false;
+//			} catch (InterruptedException e) {
+//			}
+//		
+//		}
 	}
 }

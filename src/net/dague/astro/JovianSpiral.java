@@ -60,11 +60,6 @@ public class JovianSpiral extends Activity implements OnClickListener {
 		
 	}
 	
-    protected void onPause() {
-        super.onPause();
-        // jgv.pause(); // pause game when Activity pauses
-    }
-	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.about:

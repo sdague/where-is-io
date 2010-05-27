@@ -14,12 +14,14 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class JovianThread extends Thread {
 	
-	private boolean running;
+	private boolean running = false;
 	// the height and width of the canvas
 	private int height;
 	private int width;
@@ -67,6 +69,16 @@ public class JovianThread extends Thread {
         this.context = context;
         this.calc = calc;
 
+        handler = new Handler() {
+        	public void handleMessage(Message m) {
+        		this.removeMessages(0);
+        		if (running) {
+        			Log.i("IO","About to draw");
+        			draw();
+        			sendEmptyMessageDelayed(0, 5000);
+        		}
+        }};
+        
 		state = START;
 		progress = stepSize;
     	setupPaint();
@@ -129,6 +141,11 @@ public class JovianThread extends Thread {
 		BitmapDrawable d = (BitmapDrawable)context.getResources().getDrawable(R.drawable.jupiter);
 		jupiterBitmap = d.getBitmap();
 	}
+	
+	public Handler getHandler()
+	{
+		return handler;
+	}
 
 	public void setRunning(boolean b) {
         running = b;
@@ -143,36 +160,9 @@ public class JovianThread extends Thread {
     }
     
     public void run() {
-        while (running) {
-            Canvas c = null;
-            try {
-                c = surfaceHolder.lockCanvas();
-                synchronized (surfaceHolder) {
-                    draw(c);
-                }
-                
-                // surfaceHolder.unlockCanvasAndPost(c);
-
-			} finally {
-                // do this in a finally so that if an exception is thrown
-                // during the above, we don't leave the Surface in an
-                // inconsistent state
-                if (c != null) {
-                    surfaceHolder.unlockCanvasAndPost(c);
-                }
-            }
-			try {
-////				if (state == DONE) {
-////					sleep(120000);
-////				} else {
-//				// calc.wait(500);
-				sleep (500); // sleepTime());
-//				
-			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-				Log.i("IO", "thread sleep interupted... I don't whink we care");
-			}
-        }
+    	Looper.prepare();
+    	handler.sendEmptyMessage(0);
+    	Looper.loop();
     }
     
     private long sleepTime()
@@ -322,13 +312,17 @@ public class JovianThread extends Thread {
 	}
 	
 
-	private void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
-		map = new TouchMap(width);
-		// Log.i("IO","drew background");
-		drawBackground(canvas);
+	private void draw() {
+		Canvas canvas = null;
+        try {
+            canvas = surfaceHolder.lockCanvas();
+            synchronized (surfaceHolder) {
+            	// TODO Auto-generated method stub
+            	map = new TouchMap(width);
+            	// Log.i("IO","drew background");
+            	drawBackground(canvas);
 		// Log.i("IO", "draw jupiter");
-		drawJupiter(canvas, JovianMoonSet.screenWidth());
+            	drawJupiter(canvas, JovianMoonSet.screenWidth());
 		
 ////		if (state == START) {
 ////			state = RUNNING;
@@ -343,8 +337,17 @@ public class JovianThread extends Thread {
 ////			incrementProgress();
 ////		}
 		// 	Log.i("IO", "draw disc");
-		drawJupiterDisc(canvas, JovianMoonSet.screenWidth());
+			drawJupiterDisc(canvas, JovianMoonSet.screenWidth());
 		// Log.i("IO", "drawing done");
+            }
+        } finally {
+            // do this in a finally so that if an exception is thrown
+            // during the above, we don't leave the Surface in an
+            // inconsistent state
+            if (canvas != null) {
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
+        }
 	}
 	
 	private void incrementProgress() {
@@ -361,10 +364,10 @@ public class JovianThread extends Thread {
 		// TODO Auto-generated method stub
 		String body;
 		int jupiterWidth = (int)jupiter.getStrokeWidth() / 2;
-		int minX = (width / 2) - jupiterWidth;
-		int maxX = (width / 2) + jupiterWidth;
+		int minX = (width / 2) - jupiterWidth - 10;
+		int maxX = (width / 2) + jupiterWidth + 10;
 		
-		if (x > minX && y < maxX ) {
+		if (x > minX && x < maxX ) {
 			body = "Jupiter";
 		} else {
 			body = map.getPoint((int)x, (int)y);

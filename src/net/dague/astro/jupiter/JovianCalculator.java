@@ -21,6 +21,7 @@ package net.dague.astro.jupiter;
 
 import java.util.HashMap;
 import java.util.List;
+import android.os.Handler;
 
 import net.dague.astro.data.JupiterData;
 import net.dague.astro.sim.SolarSim;
@@ -28,7 +29,6 @@ import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.Vector3;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 
@@ -38,12 +38,11 @@ public class JovianCalculator extends Thread {
 
 	long start;
 	long endHours;
-	JovianSpiralView view;
 	
 	SolarSim sim;
-	Context context;
 	JupiterData data;
 	HashMap<Long, JovianMoons> cache;
+	Handler handler;
 	
 	long START_OFFSET;
 	long END_HOURS;
@@ -51,7 +50,6 @@ public class JovianCalculator extends Thread {
 	
 	public JovianCalculator(Context ctx)
 	{
-		context = ctx;
 		sim = new SolarSim();
 		data = new JupiterData(ctx);
 		
@@ -61,6 +59,12 @@ public class JovianCalculator extends Thread {
 		TIMESTEP = JovianSpiralView.TIMESTEP_MILS;
 		cache = data.getRange(startTime(), endTime());
 	}
+	
+	public void setHandler(Handler h)
+	{
+		handler = h;
+	}
+	
 	
 	private long endTime()
 	{
@@ -184,21 +188,29 @@ public class JovianCalculator extends Thread {
     				JovianMoons jm = calcMoons(time);
     				data.addCoords(time, jm);
     				cache.put(new Long(time), jm);
-    				// if we got new data, send a signal
-    				try {
-    					notifyAll();
-    				} catch (IllegalMonitorStateException e) {
-    					// don't care
-    				}
     			}
     		}
+    		handler.sendEmptyMessage(0);
+    		if(!running) {
+    			return;
+    		}
+    		
+    		// yield();
+    		// once we are non synchronized, give things a chance to draw
+    		try {
+    			Log.i("IO", "sleeping for 10 ms");
+				sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				// e.printStackTrace();
+			}
     	}
     }
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(running) {
+		while(true) {
 			calcData();
 			try {
 				sleep(TIMESTEP);
@@ -212,5 +224,6 @@ public class JovianCalculator extends Thread {
 	public void setRunning(boolean b) {
 		// TODO Auto-generated method stub
 		running = b;
+		this.interrupt();
 	}
 }
