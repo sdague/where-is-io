@@ -11,7 +11,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,6 +62,9 @@ public class JovianThread extends Thread {
 	
 	int state;
 	private JovianCalculator calc;
+	private Paint timeLine;
+	private Paint timeText;
+	long now;
 	
     public JovianThread(SurfaceHolder surfaceHolder, Context context, JovianCalculator calc) {
 //            Handler handler) {
@@ -79,8 +84,12 @@ public class JovianThread extends Thread {
         		}
         }};
         
+        // bogus size, this gets reset when we draw
+        map = new TouchMap(1);
+        
 		state = START;
 		progress = stepSize;
+		now = System.currentTimeMillis();
     	setupPaint();
     }
     
@@ -131,12 +140,24 @@ public class JovianThread extends Thread {
 		nowline.setStrokeCap(Paint.Cap.ROUND);
 		nowline.setStrokeWidth(1);
 		
+		timeLine = new Paint();
+		timeLine.setColor(context.getResources().getColor(
+					R.color.moon));
+		timeLine.setStrokeWidth(0);
+		
+		timeText = new Paint();
+		timeText.setColor(context.getResources().getColor(
+				R.color.moon));
+		timeText.setAntiAlias(true);
+		timeText.setTypeface(Typeface.SANS_SERIF);
+		timeText.setTextSize(10);
+		
 		moon = new Paint();
 		moon.setColor(context.getResources().getColor(
 					R.color.moon));
 		moon.setStrokeCap(Paint.Cap.ROUND);
 		moon.setAntiAlias(true);
-		moon.setStrokeWidth(1);
+		moon.setStrokeWidth(0);
 		
 		BitmapDrawable d = (BitmapDrawable)context.getResources().getDrawable(R.drawable.jupiter);
 		jupiterBitmap = d.getBitmap();
@@ -167,7 +188,6 @@ public class JovianThread extends Thread {
     
     private long sleepTime()
     {
-    	long now = System.currentTimeMillis();
     	long delta = frameDuration - (now - lastFrameTime );
     	while(delta < 1) {
     		delta += frameDuration;
@@ -178,12 +198,12 @@ public class JovianThread extends Thread {
     
 	private void drawMoons(Canvas canvas)
 	{
-		JovianMoons jm = calc.getMoonsAt(System.currentTimeMillis());
+		JovianMoons jm = calc.getMoonsAt(now);
 		float width = JovianMoonSet.screenWidth();
 		
 		for (int i = 0; i < 4; i++) {
 			float moonpos = (float) jm.get(i);
-			float x = au2x(width, moonpos);
+			float x = au2xpos(moonpos);
 			canvas.drawCircle(x, nowPos(), 3, moon);
 		}		
 	}
@@ -195,28 +215,60 @@ public class JovianThread extends Thread {
 	
 	private void drawBackground(Canvas canvas)
 	{
-		
+		int hourInc = 12;
 		canvas.drawRect(0, 0, width, height, backgroundPaint);
+		
+		for (int hours = hourInc; hours < (end_hours() - hourInc); hours += hourInc ) {
+			float y = time2y(now + TimeUtil.hours2mils(hours));
+			float x = 5;
+			String text = "+" + hours + "h";
+
+			canvas.drawLine(0, y, x, y, timeLine);
+			Rect r = new Rect();
+			moon.getTextBounds(text, 0, text.length(), r);
+			canvas.drawText(text, x * 1.5f, y - r.centerY() - 1, timeText);
+		}
 	}
 	
-	private float au2x(float auWidth, float au)
+	private float time2y(long mils)
 	{
-		return (width / 2) * (au / (auWidth / 2))  + (width / 2);
+		long zero = startTime();
+		long total = totalMils();
+		
+		float pos = (mils - zero) * height / total;
+		
+		if(pos < 0) 
+			pos = 0;
+		
+		return pos;
 	}
 	
-	private void drawJupiter(Canvas canvas, float auWidth)
+	private float au2x(float au)
+	{
+		float auWidth = JovianMoonSet.screenWidth();
+		float fraction = au / (auWidth / 2);
+		float x = fraction * (float) (width / 2);
+		return x;
+	}
+	
+	private float au2xpos(float au)
+	{
+		return au2x(au) + (width / 2);
+	}
+	
+	private void drawJupiter(Canvas canvas)
 	{
 		// calculate the jupiter stroke size.  This is actually twice what it really is, but 
 		// it looks better that way on screen
-		float stroke = AstroConst.JUPITER_DIAMETER / Convert.au2km(auWidth) * width * 2;
+		float stroke = au2x(AstroConst.JUPITER_DIAMETER_AU) * 2;
 		
 		jupiter.setStrokeWidth((int)stroke);
 		canvas.drawLine(width / 2, 0, width / 2 , height, jupiter);
 	}
 	
-	private void drawJupiterDisc(Canvas canvas, float auWidth)
+	private void drawJupiterDisc(Canvas canvas)
 	{
-		float delta = AstroConst.JUPITER_DIAMETER / Convert.au2km(auWidth) * width;
+		float delta = au2x(AstroConst.JUPITER_DIAMETER_AU);
 		RectF jrect = new RectF((width / 2) - delta, nowPos() - delta, (width / 2) + delta, nowPos() + delta );
 		canvas.drawBitmap(jupiterBitmap, null, jrect, backgroundPaint);
 	}
@@ -272,12 +324,22 @@ public class JovianThread extends Thread {
 	
 	private float nowPos()
 	{
-		return scale((float) JovianSpiralView.START_HOURS / (float)JovianSpiralView.END_HOURS * height); 
+		return time2y(now);
 	}
 	
-	public static long startTime()
+	public long startTime()
 	{
-		return System.currentTimeMillis() - TimeUtil.hours2mils(JovianSpiralView.START_HOURS);
+		return now - TimeUtil.hours2mils(JovianSpiralView.START_HOURS);
+	}
+	
+	public long totalMils()
+	{
+		int end = JovianSpiralView.END_HOURS;
+		float ratio = (float)height / (float)width;
+		if (ratio < 1) {
+			end = (int)(JovianSpiralView.END_HOURS * ratio * ratio);
+		}
+		return TimeUtil.hours2mils(end);
 	}
 	
 
@@ -316,30 +378,21 @@ public class JovianThread extends Thread {
 		Canvas canvas = null;
         try {
             canvas = surfaceHolder.lockCanvas();
+            now = System.currentTimeMillis();
             synchronized (surfaceHolder) {
-            	// TODO Auto-generated method stub
-            	map = new TouchMap(width);
-            	// Log.i("IO","drew background");
+            	
+            	
+            	map.resetWidth(width);
             	drawBackground(canvas);
-		// Log.i("IO", "draw jupiter");
-            	drawJupiter(canvas, JovianMoonSet.screenWidth());
-		
-////		if (state == START) {
-////			state = RUNNING;
-////			lastFrameTime = System.currentTimeMillis();
-////		} else {
-//		// Log.i("IO", "draw moon tracks");
-			drawMoonTracks(canvas, end_hours());
-			// Log.i("IO", "draw now line");
-			drawNowLine(canvas);
-			// Log.i("IO", "draw moons");
-			drawMoons(canvas);
-////			incrementProgress();
-////		}
-		// 	Log.i("IO", "draw disc");
-			drawJupiterDisc(canvas, JovianMoonSet.screenWidth());
-		// Log.i("IO", "drawing done");
+
+            	drawJupiter(canvas);
+            	
+            	drawMoonTracks(canvas, end_hours());
+            	drawNowLine(canvas);
+            	drawMoons(canvas);
+            	drawJupiterDisc(canvas);
             }
+
         } finally {
             // do this in a finally so that if an exception is thrown
             // during the above, we don't leave the Surface in an

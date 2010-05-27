@@ -35,6 +35,12 @@ public class TouchMap {
 		map = new HashMap<Integer, String>();
 	}
 	
+	public void resetWidth(int width)
+	{
+		map.clear();
+		this.width = width;
+	}
+	
 	public void addPoint(int x, int y, String value)
 	{
 		Integer loc = new Integer((x + (y * width)));
