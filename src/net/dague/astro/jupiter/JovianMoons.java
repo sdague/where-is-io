@@ -86,6 +86,23 @@ public class JovianMoons {
 		}
 	}
 	
+	// x(n) = x(1) + y(n) * (deltax / deltay)
+	
+	public JovianMoons interpolate(JovianMoons next, long time)
+	{
+		double newjd = TimeUtil.mils2JD(time);
+		JovianMoons newjm = new JovianMoons(newjd);
+		if (this.jd < newjd && next.jd > newjd) {
+			double deltay = next.jd - jd;
+			double incy = newjd - jd;
+			newjm.callisto = callisto + incy * (next.callisto - callisto) / deltay;
+			newjm.io = io + incy * (next.io - io) / deltay;
+			newjm.ganymede = ganymede + incy * (next.ganymede - ganymede) / deltay;
+			newjm.europa = europa + incy * (next.europa - europa) / deltay;			
+		}
+		return newjm;
+	}
+	
 	public String toString()
 	{
 		return "jd: " + jd + " - c: " + callisto + ", i: " + io + ", g: " + ganymede + ", e: " + europa;

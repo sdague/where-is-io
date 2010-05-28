@@ -44,7 +44,7 @@ public class JovianThread extends Thread {
 	Bitmap jupiterBitmap;
 	SolarSim sim;
 	
-	float strokeWidth = 3;
+	float strokeWidth = 2;
 	
 	TouchMap map;
 	

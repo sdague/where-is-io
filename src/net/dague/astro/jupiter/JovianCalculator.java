@@ -112,10 +112,14 @@ public class JovianCalculator extends Thread {
 	}
 	
 	public JovianMoons getMoonsAt(long time) {
-		Long when = new Long(round(time));
+		Long start = new Long(round(time));
+		Long end = new Long(round(time + TIMESTEP));
+		
 		synchronized(cache) {
-			if (cache.containsKey(when)) {
-				return cache.get(when);
+			if (cache.containsKey(start) && cache.containsKey(end)) {
+				JovianMoons jms = cache.get(start);
+				JovianMoons jme = cache.get(end);
+				return jms.interpolate(jme, time);
 			} else {
 				return new JovianMoons();
 			}
