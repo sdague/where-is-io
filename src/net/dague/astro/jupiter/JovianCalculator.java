@@ -82,19 +82,21 @@ public class JovianCalculator extends Thread {
 		return time - (time % TIMESTEP);
 	}
 	
-	
+	// This returns a set of moon points for a time range.  I does so 
+	// by looking things up in the cache, and just telling you the percentage
+	// of data that you actually have.  This makes it a non blocking operation, 
+	// but lets the interface request getting it again in the future.
 	public JovianMoonSet getMoonPoints(long time, long hours)
 	{
 		long when = round(time);
-		long stop = when + TimeUtil.hours2mils(hours + 1);
-		
+		long stop = when + TimeUtil.hours2mils(hours);
 		JovianMoonSet set = new JovianMoonSet(when, stop);
 		
 		int total = 0;
 		int found = 0;
 		synchronized(cache) {
 			// Log.i("IO", "Cache dump: " + cache.toString());
-			for (; when < stop; when += TIMESTEP) {
+			for (; when < (stop + TIMESTEP); when += TIMESTEP) {
 				Long look = new Long(when);
 				if (cache.containsKey(look)) {
 					// Log.i("IO", "found data for " + look);

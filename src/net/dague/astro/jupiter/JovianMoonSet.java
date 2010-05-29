@@ -64,7 +64,7 @@ public class JovianMoonSet {
 	
 	private float yPos(double time, int height)
 	{
-		float y = (float) ((time - starttime) / (endtime - starttime) * (float) height);
+		float y = (float) ((time - starttime) / (endtime - starttime) * height);
 		return y;
 	}
 	
