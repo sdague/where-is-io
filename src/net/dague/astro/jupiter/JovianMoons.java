@@ -93,12 +93,11 @@ public class JovianMoons {
 		double newjd = TimeUtil.mils2JD(time);
 		JovianMoons newjm = new JovianMoons(newjd);
 		if (this.jd < newjd && next.jd > newjd) {
-			double deltay = next.jd - jd;
-			double incy = newjd - jd;
-			newjm.callisto = callisto + incy * (next.callisto - callisto) / deltay;
-			newjm.io = io + incy * (next.io - io) / deltay;
-			newjm.ganymede = ganymede + incy * (next.ganymede - ganymede) / deltay;
-			newjm.europa = europa + incy * (next.europa - europa) / deltay;			
+			double slope = (newjd - jd) / (next.jd - jd);
+			newjm.callisto = callisto + slope * (next.callisto - callisto);
+			newjm.io = io + slope * (next.io - io);
+			newjm.ganymede = ganymede + slope * (next.ganymede - ganymede);
+			newjm.europa = europa + slope * (next.europa - europa);			
 		}
 		return newjm;
 	}

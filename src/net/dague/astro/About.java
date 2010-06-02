@@ -22,6 +22,10 @@ package net.dague.astro;
 import android.app.Activity;
 import android.os.Bundle;
 
+/**
+ *  Display the about text out of strings.xml
+ *
+ */
 public class About extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		   super.onCreate(savedInstanceState);

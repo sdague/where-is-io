@@ -49,6 +49,10 @@ public class JovianCalculator extends Thread {
 	long END_HOURS;
 	long TIMESTEP;
 	
+	/**
+	 * 
+	 * @param ctx
+	 */
 	public JovianCalculator(Context ctx)
 	{
 		sim = new SolarSim();
@@ -82,10 +86,19 @@ public class JovianCalculator extends Thread {
 		return time - (time % TIMESTEP);
 	}
 	
-	// This returns a set of moon points for a time range.  I does so 
-	// by looking things up in the cache, and just telling you the percentage
-	// of data that you actually have.  This makes it a non blocking operation, 
-	// but lets the interface request getting it again in the future.
+	/**
+	 * This function is used to create a set of moon objects which represents a time 
+	 * series.  It reads out of the cache so that it's non blocking.  It does set the
+	 * percentage of data returned vs. what was asked for, so you know if you need to
+	 * queue a request for new data.
+	 * 
+	 * We actually get 1 more point than is asked for so that we can draw past the bottom
+	 * of the screem.
+	 * 
+	 * @param time - time in java milliseconds for the start of this sequence
+	 * @param hours - number of hours worth of data to collect
+	 * @return a JovianMoonSet with the corresponding range
+	 */
 	public JovianMoonSet getMoonPoints(long time, long hours)
 	{
 		long when = round(time);
@@ -113,7 +126,25 @@ public class JovianCalculator extends Thread {
 		return set;
 	}
 	
+	public JovianMoons getMoonsNext(long time) {
+		Long next = new Long(round(time + TIMESTEP));
+		return getMoonsAt(next);
+	}
+	
 	public JovianMoons getMoonsAt(long time) {
+		Long start = new Long(round(time));
+		
+		synchronized(cache) {
+			if (cache.containsKey(start)) {
+				return cache.get(start);
+			} else {
+				return new JovianMoons();
+			}
+		}
+	}
+	
+	public JovianMoons getMoonsAtInterpolate(long time) {
+//		return calcMoons(time);
 		Long start = new Long(round(time));
 		Long end = new Long(round(time + TIMESTEP));
 		
@@ -121,6 +152,7 @@ public class JovianCalculator extends Thread {
 			if (cache.containsKey(start) && cache.containsKey(end)) {
 				JovianMoons jms = cache.get(start);
 				JovianMoons jme = cache.get(end);
+				
 				return jms.interpolate(jme, time);
 			} else {
 				return new JovianMoons();

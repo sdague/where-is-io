@@ -36,5 +36,9 @@ public class TimeUtil {
 	{
 		return ((mils / (86400.0 * 1000.0) ) + 2440587.5);
 	}
+
+	public static long JD2mils(double jd) {
+		return (long) ((jd - 2440587.5) * 86400 * 1000);
+	}
 	
 }

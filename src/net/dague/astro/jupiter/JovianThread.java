@@ -41,23 +41,25 @@ public class JovianThread extends Thread {
 	Paint jupiter;
 	Paint nowline;
 	Paint moon;
+	Paint marker;
+	
 	Bitmap jupiterBitmap;
 	SolarSim sim;
 	
-	float strokeWidth = 2;
+	float strokeWidth = 2.5f;
 	
 	TouchMap map;
 	
 	// stuff for animations
 	long lastFrameTime;
-	final long frameDuration = 100;
+	final long frameDuration = 33;
 	
 	final int START = 0;
 	final int RUNNING = 1;
 	final int DONE = 2;
 	
 	
-	final int stepSize = 4;
+	final int stepSize = 1;
 	int progress;
 	
 	int state;
@@ -73,14 +75,18 @@ public class JovianThread extends Thread {
         //this.handler = handler;
         this.context = context;
         this.calc = calc;
-
+        
         handler = new Handler() {
         	public void handleMessage(Message m) {
         		this.removeMessages(0);
         		if (running) {
         			Log.i("IO","About to draw");
         			draw();
-        			sendEmptyMessageDelayed(0, 30000);
+        			if (state == DONE) {
+        				sendEmptyMessageDelayed(0, 30000);
+        			} else {
+        				sendEmptyMessageDelayed(0, sleepTime());
+        			}
         		}
         }};
         
@@ -90,7 +96,8 @@ public class JovianThread extends Thread {
 		state = START;
 		progress = stepSize;
 		now = System.currentTimeMillis();
-    	setupPaint();
+		lastFrameTime = now;
+		setupPaint();
     }
     
 	private void setupPaint()
@@ -151,13 +158,19 @@ public class JovianThread extends Thread {
 		timeText.setAntiAlias(true);
 		timeText.setTypeface(Typeface.SANS_SERIF);
 		timeText.setTextSize(10);
+
+		marker = new Paint();
+		marker.setColor(0xffff00ff);
+		marker.setAntiAlias(true);
+		marker.setStrokeWidth(4);
 		
 		moon = new Paint();
 		moon.setColor(context.getResources().getColor(
 					R.color.moon));
-		moon.setStrokeCap(Paint.Cap.ROUND);
+		// moon.setStrokeCap(Paint.Cap.ROUND);
 		moon.setAntiAlias(true);
-		moon.setStrokeWidth(0);
+		// moon.setStrokeWidth(1);
+		moon.setStyle(Paint.Style.FILL);
 		
 		BitmapDrawable d = (BitmapDrawable)context.getResources().getDrawable(R.drawable.jupiter);
 		jupiterBitmap = d.getBitmap();
@@ -189,22 +202,42 @@ public class JovianThread extends Thread {
     private long sleepTime()
     {
     	long delta = frameDuration - (now - lastFrameTime );
-    	while(delta < 1) {
-    		delta += frameDuration;
-    		incrementProgress();
+    	if (delta < 1) {
+    		return 1;
     	}
     	return delta;
     }
     
 	private void drawMoons(Canvas canvas)
 	{
-		JovianMoons jm = calc.getMoonsAt(now);
+		float moonpos;
+		float x;
+		
+		JovianMoons jm = calc.getMoonsAtInterpolate(now);
+		JovianMoons jstart = calc.getMoonsAt(now);
+		JovianMoons jnext = calc.getMoonsNext(now);
+		
 		float width = JovianMoonSet.screenWidth();
 		
+		/*
+		 * This is frustrating.  If I actually do the interpolation, the circles 
+		 * don't show up visibly in the same place.  So there is lots of fudging here
+		 */
+		
 		for (int i = 0; i < 4; i++) {
-			float moonpos = (float) jm.get(i);
-			float x = au2xpos(moonpos);
+			moonpos = (float) jstart.get(i);
+			x = (float) au2xpos(moonpos);
 			canvas.drawCircle(x, nowPos(), 3, moon);
+			// canvas.drawPoint(x, nowPos(), marker);
+			
+//			moonpos = (float) jnext.get(i);
+//			x = (float) au2xpos(moonpos);
+//			canvas.drawCircle(x, time2y(TimeUtil.JD2mils(jnext.jd)), 3, marker);
+//	
+//			moonpos = (float) jm.get(i);
+//			x = (float) au2xpos(moonpos);
+//			canvas.drawPoint(x, nowPos(), marker);
+			
 		}		
 	}
 	
@@ -243,15 +276,15 @@ public class JovianThread extends Thread {
 		return pos;
 	}
 	
-	private float au2x(float au)
+	private double au2x(double au)
 	{
-		float auWidth = JovianMoonSet.screenWidth();
-		float fraction = au / (auWidth / 2);
-		float x = fraction * (float) (width / 2);
+		double auWidth = JovianMoonSet.screenWidth();
+		double fraction = au / (auWidth / 2);
+		double x = fraction * (width / 2);
 		return x;
 	}
 	
-	private float au2xpos(float au)
+	private double au2xpos(float au)
 	{
 		return au2x(au) + (width / 2);
 	}
@@ -260,7 +293,7 @@ public class JovianThread extends Thread {
 	{
 		// calculate the jupiter stroke size.  This is actually twice what it really is, but 
 		// it looks better that way on screen
-		float stroke = au2x(AstroConst.JUPITER_DIAMETER_AU) * 2;
+		double stroke = au2x(AstroConst.JUPITER_DIAMETER_AU) * 2;
 		
 		jupiter.setStrokeWidth((int)stroke);
 		canvas.drawLine(width / 2, 0, width / 2 , height, jupiter);
@@ -268,7 +301,7 @@ public class JovianThread extends Thread {
 	
 	private void drawJupiterDisc(Canvas canvas)
 	{
-		float delta = au2x(AstroConst.JUPITER_DIAMETER_AU);
+		float delta = (float)au2x(AstroConst.JUPITER_DIAMETER_AU);
 		RectF jrect = new RectF((width / 2) - delta, nowPos() - delta, (width / 2) + delta, nowPos() + delta );
 		canvas.drawBitmap(jupiterBitmap, null, jrect, backgroundPaint);
 	}
@@ -279,35 +312,27 @@ public class JovianThread extends Thread {
 	{
 		JovianMoonSet jp = calc.getMoonPoints(startTime(), hours);
 		
-		
-//		Log.i("IO", "Percent " + jp.percent);
-		
 		if (jp.percent == 0)
 			return;
 		
-//		if (hours >= end_hours()  && jp.percent > 99) 
-//			state = DONE;
+		if (hours >= end_hours()  && jp.percent > 99) 
+			state = DONE;
 		
 		int drawHeight = height * hours / end_hours();
 		
 		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
 
-		//Log.i("IO", "Point size" + ipoints.length);
-//		for (int i = 0; i < ipoints.length; i++) {
-//			Log.i("Points", "points: " + ipoints[i]);
-//		}
-//		Log.i("IO", "IO points: " + ipoints);
 		canvas.drawLines(ipoints, io);
 		addTouchPoints(ipoints, "Io");
-//		
+		
 		float[] epoints = jp.getMoonLines(JovianMoons.EUROPA, width, drawHeight);
 		canvas.drawLines(epoints, europa);
 		addTouchPoints(epoints, "Europa");
-//		
+
 		float[] gpoints = jp.getMoonLines(JovianMoons.GANYMEDE, width, drawHeight);
 		canvas.drawLines(gpoints, ganymede);
 		addTouchPoints(gpoints, "Ganymede");
-//		
+	
 		float[] cpoints = jp.getMoonLines(JovianMoons.CALLISTO, width, drawHeight);
 		canvas.drawLines(cpoints, callisto);
 		addTouchPoints(cpoints, "Callisto");
@@ -386,8 +411,14 @@ public class JovianThread extends Thread {
             	drawBackground(canvas);
 
             	drawJupiter(canvas);
-            	
-            	drawMoonTracks(canvas, end_hours());
+            	if (state == RUNNING) {
+            		drawMoonTracks(canvas, progress);
+            		incrementProgress();
+            	} else if (state == DONE) {
+            		drawMoonTracks(canvas, end_hours());
+            	} else {
+            		state = RUNNING;
+            	}
             	drawNowLine(canvas);
             	drawMoons(canvas);
             	drawJupiterDisc(canvas);
@@ -409,6 +440,7 @@ public class JovianThread extends Thread {
 		}
 		if (progress > end_hours()) {
 			progress = end_hours();
+			state = DONE;
 		}
 		
 	}

@@ -24,6 +24,12 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+/**
+ * Provides a Dialog window which displays the detailed information
+ * for each of the moons.
+ *
+ */
 public class Details extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
