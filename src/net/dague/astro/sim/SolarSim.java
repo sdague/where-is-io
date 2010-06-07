@@ -75,7 +75,8 @@ public class SolarSim {
 		default:
 			return new Vector3();
 		}
-	}
+	}	
+	
 	
 	
 	static {

@@ -21,6 +21,7 @@ package net.dague.astro.jupiter;
 
 import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.TimeUtil;
+import net.dague.astro.util.Vector3;
 
 public class JovianMoons {
 	public static final int CALLISTO = 0;
@@ -29,59 +30,59 @@ public class JovianMoons {
 	public static final int IO = 3;
 	
 	public double jd;
-	public double callisto;
-	public double io;
-	public double ganymede;
-	public double europa;
+	public Vector3 callisto;
+	public Vector3 io;
+	public Vector3 ganymede;
+	public Vector3 europa;
 	
 	public JovianMoons()
 	{
 		jd = TimeUtil.mils2JD(System.currentTimeMillis());
-		callisto = 0;
-		io = 0;
-		ganymede = 0;
-		europa = 0;
+		callisto = new Vector3();
+		io = new Vector3();
+		ganymede = new Vector3();
+		europa = new Vector3();
 	}
 	
 	public JovianMoons(double t)
 	{
 		jd = t;
-		callisto = 0;
-		io = 0;
-		ganymede = 0;
-		europa = 0;
+		callisto = new Vector3();
+		io = new Vector3();
+		ganymede = new Vector3();
+		europa = new Vector3();
 	}
 	
-	public double get(int i)
+	public double getX(int i)
 	{
 		switch(i) {
 		case IO:
-			return io;
+			return io.X;
 		case EUROPA:
-			return europa;
+			return europa.X;
 		case CALLISTO:
-			return callisto;
+			return callisto.X;
 		case GANYMEDE:
-			return ganymede;
+			return ganymede.X;
 		default:
 			return 0;
 		}
 	}
 	
-	public void set(int i, double v)
+	public void setX(int i, double v)
 	{
 		switch(i) {
 		case IO:
-			io = v;
+			io.X = v;
 			break;
 		case EUROPA:
-			europa = v;
+			europa.X = v;
 			break;
 		case CALLISTO:
-			callisto = v;
+			callisto.X = v;
 			break;
 		case GANYMEDE:
-			ganymede = v;
+			ganymede.X = v;
 			break;
 		}
 	}
@@ -94,10 +95,10 @@ public class JovianMoons {
 		JovianMoons newjm = new JovianMoons(newjd);
 		if (this.jd < newjd && next.jd > newjd) {
 			double slope = (newjd - jd) / (next.jd - jd);
-			newjm.callisto = callisto + slope * (next.callisto - callisto);
-			newjm.io = io + slope * (next.io - io);
-			newjm.ganymede = ganymede + slope * (next.ganymede - ganymede);
-			newjm.europa = europa + slope * (next.europa - europa);			
+			newjm.callisto.X = callisto.X + slope * (next.callisto.X - callisto.X);
+			newjm.io.X = io.X + slope * (next.io.X - io.X);
+			newjm.ganymede.X = ganymede.X + slope * (next.ganymede.X - ganymede.X);
+			newjm.europa.X = europa.X + slope * (next.europa.X - europa.X);			
 		}
 		return newjm;
 	}

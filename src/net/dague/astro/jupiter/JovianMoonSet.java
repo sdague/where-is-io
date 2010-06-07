@@ -78,9 +78,9 @@ public class JovianMoonSet {
 		for (int i = 0; i < end; i++) {
 			JovianMoons j = jp.elementAt(i);
 			JovianMoons next = jp.elementAt(i + 1);
-			float x = xPos(j.get(moon), width);
+			float x = xPos(j.getX(moon), width);
 			float y = yPos(j.jd, height);
-			float xnext = xPos(next.get(moon), width);
+			float xnext = xPos(next.getX(moon), width);
 			float ynext = yPos(next.jd, height);
 			results[4*i] = x;
 			results[4*i + 1] = y;
@@ -95,7 +95,7 @@ public class JovianMoonSet {
 		float[] results = new float[jp.size() * 2];
 		for (int i = 0; i < jp.size(); i++) {
 			JovianMoons j = jp.elementAt(i);
-			float x = (float) ((j.get(moon) / max) * (width / scale) + (width / 2));
+			float x = (float) ((j.getX(moon) / max) * (width / scale) + (width / 2));
 			float y = i * height / jp.size();
 			results[2*i] = x;
 			results[2*i + 1] = y;

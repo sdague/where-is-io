@@ -225,7 +225,7 @@ public class JovianThread extends Thread {
 		 */
 		
 		for (int i = 0; i < 4; i++) {
-			moonpos = (float) jstart.get(i);
+			moonpos = (float) jstart.getX(i);
 			x = (float) au2xpos(moonpos);
 			canvas.drawCircle(x, nowPos(), 3, moon);
 			// canvas.drawPoint(x, nowPos(), marker);

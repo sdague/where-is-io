@@ -25,4 +25,14 @@ public class Convert {
 	{
 		return au * AstroConst.KM_IN_AU;
 	}
+	
+	public static double deg2rad(double d) 
+	{
+		return d / 360.0 * 2 * Math.PI;
+	}
+	
+	public static double rad2deg(double r)
+	{
+		return r / (2 * Math.PI) * 360.0;
+	}
 }

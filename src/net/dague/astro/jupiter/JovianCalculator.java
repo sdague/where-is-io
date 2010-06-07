@@ -24,6 +24,7 @@ import java.util.List;
 import android.os.Handler;
 
 import net.dague.astro.data.JupiterData;
+import net.dague.astro.sim.JupiterSim;
 import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.Vector3;
@@ -40,7 +41,7 @@ public class JovianCalculator extends Thread {
 	long endHours;
 	long safeUntil;
 	
-	SolarSim sim;
+	JupiterSim sim;
 	JupiterData data;
 	HashMap<Long, JovianMoons> cache;
 	Handler handler;
@@ -55,7 +56,7 @@ public class JovianCalculator extends Thread {
 	 */
 	public JovianCalculator(Context ctx)
 	{
-		sim = new SolarSim();
+		sim = new JupiterSim();
 		data = new JupiterData(ctx);
 		
 		
@@ -126,6 +127,10 @@ public class JovianCalculator extends Thread {
 		return set;
 	}
 	
+	/* 
+	 * Get the next moons position
+	 */
+	
 	public JovianMoons getMoonsNext(long time) {
 		Long next = new Long(round(time + TIMESTEP));
 		return getMoonsAt(next);
@@ -195,28 +200,6 @@ public class JovianCalculator extends Thread {
 	}
 	
 
-	private JovianMoons calcMoons(long time)
-	{
-		double jd = TimeUtil.mils2JD(time);
-		JovianMoons jv = new JovianMoons(jd);
-
-		Vector3 earth = sim.calcPosition(SolarSim.EARTH, jd);
-		Vector3 jupiter = sim.calcPosition(SolarSim.JUPITER, jd);
-		
-		Vector3 callisto = sim.calcPosition(SolarSim.CALLISTO, jd);
-		jv.callisto = spiralProjection(callisto, earth, jupiter);
-
-		Vector3 io = sim.calcPosition(SolarSim.IO, jd);
-		jv.io = spiralProjection(io, earth, jupiter);
-
-		Vector3 europa = sim.calcPosition(SolarSim.EUROPA, jd);
-		jv.europa = spiralProjection(europa, earth, jupiter);
-
-		Vector3 ganymede = sim.calcPosition(SolarSim.GANYMEDE, jd);
-		jv.ganymede = spiralProjection(ganymede, earth, jupiter);
-		
-		return jv;
-	}
 	
     private void calcData() {
     	long end = endTime();
@@ -224,7 +207,7 @@ public class JovianCalculator extends Thread {
     		synchronized(cache) {
     			if (!cache.containsKey(new Long(time))) {
     				Log.i("IO","Calculate moons for " + time);
-    				JovianMoons jm = calcMoons(time);
+    				JovianMoons jm = sim.calcMoons(time);
     				data.addCoords(time, jm);
     				cache.put(new Long(time), jm);
     	    		handler.sendEmptyMessage(0);

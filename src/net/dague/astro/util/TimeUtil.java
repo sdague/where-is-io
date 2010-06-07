@@ -19,6 +19,9 @@
 
 package net.dague.astro.util;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class TimeUtil {
 	public static long hours2mils(long hours)
 	{
@@ -39,6 +42,25 @@ public class TimeUtil {
 
 	public static long JD2mils(double jd) {
 		return (long) ((jd - 2440587.5) * 86400 * 1000);
+	}
+	
+	public static double JDfloor(double jd)
+	{
+		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		c.setTimeInMillis(TimeUtil.JD2mils(jd));
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return TimeUtil.mils2JD(c.getTimeInMillis());
+	}
+	
+	public static double JD2sideral(double jd) {
+		double T = (jd - 2541545.0) / 36525;
+		double sid = 100.46061837 + 36000.770053608 * T + 
+			0.000387933 * T * T + T * T * T / 38710000;
+		sid = sid % 360.0;
+		return sid;
 	}
 	
 }

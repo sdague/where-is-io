@@ -25,10 +25,18 @@ public interface Constants extends BaseColumns {
 	public static final String TABLE_NAME = "jovian_moons" ;
 	// Columns in the Events database
 	public static final String TIME = "time" ;
-	public static final String EUROPA = "europa";
-	public static final String IO = "io";
-	public static final String GANYMEDE = "ganymede";
-	public static final String CALLISTO = "callisto";
+	public static final String EUROPA_X = "europa_x";
+	public static final String IO_X = "io_x";
+	public static final String GANYMEDE_X = "ganymede_x";
+	public static final String CALLISTO_X = "callisto_x";
+	public static final String EUROPA_Y = "europa_y";
+	public static final String IO_Y = "io_y";
+	public static final String GANYMEDE_Y = "ganymede_y";
+	public static final String CALLISTO_Y = "callisto_y";
+	public static final String EUROPA_Z = "europa_z";
+	public static final String IO_Z = "io_z";
+	public static final String GANYMEDE_Z = "ganymede_z";
+	public static final String CALLISTO_Z = "callisto_z";
 	public static final String BODY = "body" ;
 	public static final String X = "x";
 	public static final String Y = "y";
