@@ -19,15 +19,22 @@
 
 package net.dague.astro.jupiter;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
+import java.util.Map.Entry;
+
 import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.Vector3;
 
 public class JovianMoons {
-	public static final int CALLISTO = 0;
-	public static final int EUROPA = 1;
-	public static final int GANYMEDE = 2;
-	public static final int IO = 3;
+	public static final int JUPITER = 0;
+	public static final int CALLISTO = 1;
+	public static final int EUROPA = 2;
+	public static final int GANYMEDE = 3;
+	public static final int IO = 4;
 	
 	public double jd;
 	public Vector3 callisto;
@@ -51,6 +58,41 @@ public class JovianMoons {
 		io = new Vector3();
 		ganymede = new Vector3();
 		europa = new Vector3();
+	}
+	
+	public int[] getZOrder()
+	{
+		int[] values = new int[5];
+		
+		TreeMap<Double, Integer> map = new TreeMap<Double, Integer>();
+		for (int i = 0; i < 5; i++) {
+			map.put(new Double(getZ(i)), new Integer(i));
+		}
+		
+		int i = 0;
+		for(Entry<Double, Integer> entry : map.entrySet()) {
+			  Integer value = entry.getValue();
+			  values[i] = value.intValue();
+			  i++;
+		}
+		return values;
+	}
+	
+
+	public double getZ(int i)
+	{
+		switch(i) {
+		case IO:
+			return io.Z;
+		case EUROPA:
+			return europa.Z;
+		case CALLISTO:
+			return callisto.Z;
+		case GANYMEDE:
+			return ganymede.Z;
+		default:
+			return 0;
+		}
 	}
 	
 	public double getX(int i)

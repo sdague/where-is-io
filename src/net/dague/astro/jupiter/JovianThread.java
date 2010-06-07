@@ -21,6 +21,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+/*
+ *  JovianThread is the drawing thread for the JovianSprialView.  Having drawing in a thread
+ *  makes it possible to do basic animations easily without degrading user experience.
+ */
 public class JovianThread extends Thread {
 	
 	private boolean running = false;
@@ -138,7 +142,7 @@ public class JovianThread extends Thread {
 		jupiter = new Paint();
 		jupiter.setColor(context.getResources().getColor(
 					R.color.jupiter));
-		jupiter.setStrokeCap(Paint.Cap.ROUND);
+		jupiter.setStrokeCap(Paint.Cap.SQUARE);
 		jupiter.setStrokeWidth(scale(10));
 		
 		nowline = new Paint();
@@ -284,20 +288,26 @@ public class JovianThread extends Thread {
 		return x;
 	}
 	
-	private double au2xpos(float au)
+	private double au2xpos(double au1)
 	{
-		return au2x(au) + (width / 2);
+		return au2x(au1) + (width / 2);
 	}
 	
-	private void drawJupiter(Canvas canvas)
+	private void drawJupiterLine(Canvas canvas, double jd1, double jd2)
 	{
 		// calculate the jupiter stroke size.  This is actually twice what it really is, but 
 		// it looks better that way on screen
 		double stroke = au2x(AstroConst.JUPITER_DIAMETER_AU) * 2;
 		
 		jupiter.setStrokeWidth((int)stroke);
-		canvas.drawLine(width / 2, 0, width / 2 , height, jupiter);
+		float y1 = time2y(TimeUtil.JD2mils(jd1));
+		float y2 = time2y(TimeUtil.JD2mils(jd2));
+		canvas.drawLine(width / 2, y1, width / 2 , y2, jupiter);
 	}
+	
+	/*
+	 * This puts the picture of Jupiter on the canvas, and in the right size
+	 */
 	
 	private void drawJupiterDisc(Canvas canvas)
 	{
@@ -320,24 +330,64 @@ public class JovianThread extends Thread {
 		
 		int drawHeight = height * hours / end_hours();
 		
-		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
-
-		canvas.drawLines(ipoints, io);
-		addTouchPoints(ipoints, "Io");
+		for (int i = 0; i < (jp.size() - 1); i++ ) {
+			JovianMoons start = jp.get(i);
+			JovianMoons stop = jp.get(i + 1);
+			drawInOrder(canvas, start, stop);
+		}
 		
-		float[] epoints = jp.getMoonLines(JovianMoons.EUROPA, width, drawHeight);
-		canvas.drawLines(epoints, europa);
-		addTouchPoints(epoints, "Europa");
-
-		float[] gpoints = jp.getMoonLines(JovianMoons.GANYMEDE, width, drawHeight);
-		canvas.drawLines(gpoints, ganymede);
-		addTouchPoints(gpoints, "Ganymede");
-	
-		float[] cpoints = jp.getMoonLines(JovianMoons.CALLISTO, width, drawHeight);
-		canvas.drawLines(cpoints, callisto);
-		addTouchPoints(cpoints, "Callisto");
+//		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
+//
+//		canvas.drawLines(ipoints, io);
+//		addTouchPoints(ipoints, "Io");
+//		
+//		float[] epoints = jp.getMoonLines(JovianMoons.EUROPA, width, drawHeight);
+//		canvas.drawLines(epoints, europa);
+//		addTouchPoints(epoints, "Europa");
+//
+//		float[] gpoints = jp.getMoonLines(JovianMoons.GANYMEDE, width, drawHeight);
+//		canvas.drawLines(gpoints, ganymede);
+//		addTouchPoints(gpoints, "Ganymede");
+//	
+//		float[] cpoints = jp.getMoonLines(JovianMoons.CALLISTO, width, drawHeight);
+//		canvas.drawLines(cpoints, callisto);
+//		addTouchPoints(cpoints, "Callisto");
 	}
 	
+	private void drawInOrder(Canvas c, JovianMoons start, JovianMoons stop) {
+		// TODO Auto-generated method stub
+		int[] seq = start.getZOrder();
+		for (int i = 0; i < seq.length; i++) {
+			int obj = seq[i];
+			switch(obj) {
+			case JovianMoons.JUPITER:
+				drawJupiterLine(c, start.jd, stop.jd);
+				break;
+			case JovianMoons.IO:
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, io); 
+				break;
+			case JovianMoons.GANYMEDE:
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, ganymede); 
+				break;
+			case JovianMoons.EUROPA:
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, europa); 
+				break;
+			case JovianMoons.CALLISTO:
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, callisto);
+				break;
+			}
+		}
+	}
+	
+	private void drawScaleLine(Canvas c, double au1, double jd1, double au2, double jd2, Paint p )
+	{
+		float x1 = (float) au2xpos(au1);
+		float x2 = (float) au2xpos(au2);
+		float y1 = time2y(TimeUtil.JD2mils(jd1));
+		float y2 = time2y(TimeUtil.JD2mils(jd2));
+		c.drawLine(x1, y1, x2, y2, p);
+	}
+
 	private void addTouchPoints(float[] points, String value)
 	{
 		int x = 0;
@@ -410,7 +460,6 @@ public class JovianThread extends Thread {
             	map.resetWidth(width);
             	drawBackground(canvas);
 
-            	drawJupiter(canvas);
             	if (state == RUNNING) {
             		drawMoonTracks(canvas, progress);
             		incrementProgress();

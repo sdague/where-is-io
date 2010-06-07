@@ -56,6 +56,15 @@ public class JovianMoonSet {
 		return (float) (max * scale);
 	}
 	
+	public JovianMoons get(int index)
+	{
+		if (index < jp.size()) {
+			return jp.elementAt(index);
+		} else {
+			return null;
+		}
+	}
+	
 	private float xPos(double moon, int width)
 	{
 		float x = (float) ((moon / max) * (width / scale) + (width / 2));
@@ -122,6 +131,11 @@ public class JovianMoonSet {
 	public float[] getGanymedePoints(int width, int height)
 	{
 		return getMoonPoints(JovianMoons.GANYMEDE, width, height);
+	}
+
+	public int size() {
+		// TODO Auto-generated method stub
+		return jp.size();
 	}
 
 	
