@@ -69,11 +69,12 @@ public class JovianMoons {
 			map.put(new Double(getZ(i)), new Integer(i));
 		}
 		
-		int i = 0;
+		
+		int i = 4;
 		for(Entry<Double, Integer> entry : map.entrySet()) {
 			  Integer value = entry.getValue();
 			  values[i] = value.intValue();
-			  i++;
+			  i--;
 		}
 		return values;
 	}

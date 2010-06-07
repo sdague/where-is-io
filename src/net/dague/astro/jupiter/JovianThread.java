@@ -113,7 +113,7 @@ public class JovianThread extends Thread {
 		europa = new Paint();
 		europa.setColor(context.getResources().getColor(
 				R.color.europa));
-		europa.setStrokeCap(Paint.Cap.ROUND);
+		europa.setStrokeCap(Paint.Cap.BUTT);
 		
 		europa.setStrokeWidth(strokeWidth);
 		europa.setAntiAlias(true);
@@ -121,28 +121,28 @@ public class JovianThread extends Thread {
 		io = new Paint();
 		io.setColor(context.getResources().getColor(
 				R.color.io));
-		io.setStrokeCap(Paint.Cap.ROUND);
+		io.setStrokeCap(Paint.Cap.BUTT);
 		io.setStrokeWidth(strokeWidth);
 		io.setAntiAlias(true);
 			
 		ganymede = new Paint();
 		ganymede.setColor(context.getResources().getColor(
 				R.color.ganymede));
-		ganymede.setStrokeCap(Paint.Cap.ROUND);
+		ganymede.setStrokeCap(Paint.Cap.BUTT);
 		ganymede.setStrokeWidth(strokeWidth);
 		ganymede.setAntiAlias(true);
 		
 		callisto = new Paint();
 		callisto.setColor(context.getResources().getColor(
 				R.color.callisto));
-		callisto.setStrokeCap(Paint.Cap.ROUND);
+		callisto.setStrokeCap(Paint.Cap.BUTT);
 		callisto.setStrokeWidth(strokeWidth);
 		callisto.setAntiAlias(true);
 		
 		jupiter = new Paint();
 		jupiter.setColor(context.getResources().getColor(
 					R.color.jupiter));
-		jupiter.setStrokeCap(Paint.Cap.SQUARE);
+		jupiter.setStrokeCap(Paint.Cap.BUTT);
 		jupiter.setStrokeWidth(scale(10));
 		
 		nowline = new Paint();
@@ -228,8 +228,8 @@ public class JovianThread extends Thread {
 		 * don't show up visibly in the same place.  So there is lots of fudging here
 		 */
 		
-		for (int i = 0; i < 4; i++) {
-			moonpos = (float) jstart.getX(i);
+		for (int i = 1; i < 5; i++) {
+			moonpos = (float) jm.getX(i);
 			x = (float) au2xpos(moonpos);
 			canvas.drawCircle(x, nowPos(), 3, moon);
 			// canvas.drawPoint(x, nowPos(), marker);
@@ -273,10 +273,7 @@ public class JovianThread extends Thread {
 		long total = totalMils();
 		
 		float pos = (mils - zero) * height / total;
-		
-		if(pos < 0) 
-			pos = 0;
-		
+			
 		return pos;
 	}
 	
@@ -297,7 +294,7 @@ public class JovianThread extends Thread {
 	{
 		// calculate the jupiter stroke size.  This is actually twice what it really is, but 
 		// it looks better that way on screen
-		double stroke = au2x(AstroConst.JUPITER_DIAMETER_AU) * 2;
+		double stroke = au2x(AstroConst.JUPITER_DIAMETER_AU);
 		
 		jupiter.setStrokeWidth((int)stroke);
 		float y1 = time2y(TimeUtil.JD2mils(jd1));
@@ -328,12 +325,16 @@ public class JovianThread extends Thread {
 		if (hours >= end_hours()  && jp.percent > 99) 
 			state = DONE;
 		
-		int drawHeight = height * hours / end_hours();
+		// This is a horendous hack, but basically in order
+		// to get the overlap right I've got to do lots of 
+		// tricks with drawing, including actually drawing 
+		// lines in funny overlaping ways.
 		
-		for (int i = 0; i < (jp.size() - 1); i++ ) {
+		for (int i = 0; i < (jp.size() - 2); i++ ) {
 			JovianMoons start = jp.get(i);
-			JovianMoons stop = jp.get(i + 1);
+			JovianMoons stop = jp.get(i + 2);
 			drawInOrder(canvas, start, stop);
+			
 		}
 		
 //		float[] ipoints = jp.getMoonLines(JovianMoons.IO, width, drawHeight);
@@ -364,27 +365,30 @@ public class JovianThread extends Thread {
 				drawJupiterLine(c, start.jd, stop.jd);
 				break;
 			case JovianMoons.IO:
-				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, io); 
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, io, "Io"); 
 				break;
 			case JovianMoons.GANYMEDE:
-				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, ganymede); 
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, ganymede, "Ganymede"); 
 				break;
 			case JovianMoons.EUROPA:
-				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, europa); 
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, europa, "Europa"); 
 				break;
 			case JovianMoons.CALLISTO:
-				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, callisto);
+				drawScaleLine(c, start.getX(obj), start.jd, stop.getX(obj), stop.jd, callisto, "Callisto");
 				break;
 			}
 		}
 	}
 	
-	private void drawScaleLine(Canvas c, double au1, double jd1, double au2, double jd2, Paint p )
+	private void drawScaleLine(Canvas c, double au1, double jd1, double au2, double jd2, Paint p, String s )
 	{
 		float x1 = (float) au2xpos(au1);
 		float x2 = (float) au2xpos(au2);
 		float y1 = time2y(TimeUtil.JD2mils(jd1));
 		float y2 = time2y(TimeUtil.JD2mils(jd2));
+//		float x3 = x2 + (x2 - x1) / (y2 - y1) / 2;
+//		float y3 = y2 + (x2 - x1) / (y2 - y1) / 2;
+		map.addPoint((int)x1, (int)y1, s);
 		c.drawLine(x1, y1, x2, y2, p);
 	}
 
