@@ -18,9 +18,25 @@ public class SkyCoords {
 	
 	public SkyCoords(Vector3 origin, Vector3 target) {
 		Vector3 v = target.sub(origin);
-		Log.i("IO", "Computed vector " + v);
-		ra = Math.atan2(v.Y, v.X);
-		decl = Math.asin(v.Z / v.mag());
+		// This vector is in the delta vector in the Sun axes, but now we
+		// have to convert it to the Earth axes by Spherical transform
+		
+		// the earth's tilt
+		double tilt = Convert.deg2rad(23.4406);
+		
+		
+		Vector3 earthV = new Vector3();
+
+		earthV.X = v.X;
+		earthV.Y = v.Y * Math.cos(tilt) - v.Z * Math.sin(tilt);
+		earthV.Z = v.Y * Math.sin(tilt) + v.Z * Math.cos(tilt);
+		
+		Log.i("IO", "Computed vector " + earthV);
+		ra = Math.atan2(earthV.Y, earthV.X);
+		if(ra < 0) {
+			ra += (2 * Math.PI);
+		}
+		decl = Math.asin(earthV.Z / earthV.mag());
 	}
 	
 	public String fmthrs(double rad)

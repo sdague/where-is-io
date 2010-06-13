@@ -43,7 +43,7 @@ public class RiseCalculator {
 			delta = riseCalc(targetcoords, OFFSET, jd);
 		}
 		
-		Log.i("IO", "Body: " + body + ", Rise Delta: " + delta * 24);
+		Log.i("IO", "Body: " + body + ", Rise Delta: " + delta);
 		return delta + TimeUtil.JDfloor(jd);
 	}
 
@@ -60,7 +60,7 @@ public class RiseCalculator {
 		} else {
 			delta = setCalc(targetcoords, OFFSET, jd);
 		}
-		Log.i("IO", "Body: " + body + ", Set Delta: " + delta * 24);
+		Log.i("IO", "Body: " + body + ", Set Delta: " + delta);
 		return delta + TimeUtil.JDfloor(jd);
 	}
 	
@@ -75,6 +75,7 @@ public class RiseCalculator {
 		while (m < 0) { m += 1.0; }
 		while (m > 1) { m -= 1.0; }
 
+		Log.i("IO", "Skycoords: " + s.toString());
 		Log.i("IO", "Transit: " + m);
 		
 		return m;

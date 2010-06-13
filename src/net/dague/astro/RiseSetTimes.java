@@ -29,11 +29,14 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         double gps[] = getGPS();
         
         double now = TimeUtil.mils2JD(System.currentTimeMillis());
+        // set now for the example program
+        now = 2447240.5;
+        
         RiseCalculator rs = new RiseCalculator(gps[0], gps[1]);
         
         // Get us these as del
-        double JupiterRise = rs.riseTime(SolarSim.JUPITER, now);
-        double JupiterSet = rs.setTime(SolarSim.JUPITER, now);
+        double JupiterRise = rs.riseTime(SolarSim.VENUS, now);
+        double JupiterSet = rs.setTime(SolarSim.VENUS, now);
         DateFormat df = DateFormat.getInstance();
 
         TimeZone tz = TimeZone.getDefault();
@@ -54,7 +57,7 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         double SunRise = rs.riseTime(SolarSim.SUN, now);
         double SunSet = rs.setTime(SolarSim.SUN, now);
         Calendar sscal = Calendar.getInstance();
-        jscal.setTimeInMillis(TimeUtil.JD2mils(SunSet, tz));
+        sscal.setTimeInMillis(TimeUtil.JD2mils(SunSet, tz));
         Calendar srcal = Calendar.getInstance();
         srcal.setTimeInMillis(TimeUtil.JD2mils(SunRise, tz));        
         
