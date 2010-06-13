@@ -1,8 +1,13 @@
 package net.dague.astro;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import net.dague.astro.sim.JupiterSim;
+import net.dague.astro.sim.RiseCalculator;
+import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import android.app.Activity;
 import android.content.Context;
@@ -21,21 +26,43 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.riseset);
         
-        double now = TimeUtil.mils2JD(System.currentTimeMillis());
-        JupiterSim js = new JupiterSim();
-        
         double gps[] = getGPS();
         
-        double rise = js.riseTime(gps[0], gps[1], now);
-        double set = js.setTime(gps[0], gps[1], now);
+        double now = TimeUtil.mils2JD(System.currentTimeMillis());
+        RiseCalculator rs = new RiseCalculator(gps[0], gps[1]);
+        
+        // Get us these as del
+        double JupiterRise = rs.riseTime(SolarSim.JUPITER, now);
+        double JupiterSet = rs.setTime(SolarSim.JUPITER, now);
+        DateFormat df = DateFormat.getInstance();
+
+        TimeZone tz = TimeZone.getDefault();
+        
+        Calendar jscal = Calendar.getInstance();
+        jscal.setTimeInMillis(TimeUtil.JD2mils(JupiterSet, tz));
+        Calendar jrcal = Calendar.getInstance();
+        jrcal.setTimeInMillis(TimeUtil.JD2mils(JupiterRise, tz));
         
         
         TextView jrise = (TextView) findViewById(R.id.jupiter_rise);
-        jrise.setText("Jupiter Rise: " + rise);
+        jrise.setText("Jupiter Rise: " + df.format(jrcal.getTime()));
 
         TextView jset = (TextView) findViewById(R.id.jupiter_set);
-        jset.setText("Jupiter Set: " + set);
+        jset.setText("Jupiter Set: " + df.format(jscal.getTime()));
+
+        // Sun now
+        double SunRise = rs.riseTime(SolarSim.SUN, now);
+        double SunSet = rs.setTime(SolarSim.SUN, now);
+        Calendar sscal = Calendar.getInstance();
+        jscal.setTimeInMillis(TimeUtil.JD2mils(SunSet, tz));
+        Calendar srcal = Calendar.getInstance();
+        srcal.setTimeInMillis(TimeUtil.JD2mils(SunRise, tz));        
         
+        TextView srise = (TextView) findViewById(R.id.sun_rise);
+        srise.setText("Sun Rise: " + df.format(srcal.getTime()));
+
+        TextView sset = (TextView) findViewById(R.id.sun_set);
+        sset.setText("Sun Set: " + df.format(sscal.getTime()));
         
         // Set up click listeners for all the buttons
 //        View continueButton = findViewById(R.id.continue_button);

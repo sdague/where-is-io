@@ -12,23 +12,7 @@ public class JupiterSim {
 	public JupiterSim() {
 		sim = new SolarSim();
 	}
-	
-	public double riseTime(double lat, double lon, double jd)
-	{
-		SkyCoords jupiter = new SkyCoords(sim.calcPosition(SolarSim.EARTH, jd), sim.calcPosition(SolarSim.JUPITER, jd));
-		Log.i("IO", jupiter.toString());
-		RiseCalculator rc = new RiseCalculator(lat, lon);
-		return rc.riseTime(jupiter, jd);
-	}
-	
-	public double setTime(double lat, double lon, double jd)
-	{
-		SkyCoords jupiter = new SkyCoords(sim.calcPosition(SolarSim.EARTH, jd), sim.calcPosition(SolarSim.JUPITER, jd));
-		Log.i("IO", jupiter.toString());
-		RiseCalculator rc = new RiseCalculator(lat, lon);
-		return rc.setTime(jupiter, jd);
-	}
-	
+		
 	public JovianMoons calcMoons(long time)
 	{
 		double jd = TimeUtil.mils2JD(time);
