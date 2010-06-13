@@ -104,4 +104,9 @@ public class Vector3 {
 	{
 		return (X == 0.0 && Y == 0.0 && Z == 0.0);
 	}
+	
+	public String toString()
+	{
+		return "[" + X + "," + Y + "," + Z + "]";
+	}
 }

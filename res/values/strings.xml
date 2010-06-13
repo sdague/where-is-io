@@ -5,6 +5,8 @@
     <string name="delete_label">Reset Cache</string>
     <string name="delete_shortcut">D</string>
     <string name="close_label">Close</string>
+    <string name="spiral_title">Jovian Spiral</string>
+    <string name="riseset_title">Rise and Set times</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
     <string name="about_title">About Where is Io - version 1.3</string>
@@ -15,7 +17,7 @@ at any given time.  Even through only 8x binoculars you can make out these
 The portrait view shows a 4 day window of time, with the orange line 
 representing the current state.  In landscape view, you get a close up on
 the first portion of the graph (total time will vary based on the aspect
-ratio of your device).  Jupiter's size is slightly exagerated (2x) for aesthetics.\n
+ratio of your device).  Jupiter\'s size is slightly exagerated (2x) for aesthetics.\n
 This is a work in progress, expect to see additional functions rolled out
 over time.\n
 <b>License / Copyright</b>\n
@@ -78,7 +80,7 @@ Learn more at: http://en.wikipedia.org/wiki/Io_%28moon%29
 <b>Mass:</b> 0.008 Earths\n\
 <b>Gravity:</b> 0.134 g\n
 \n\
-Europa is the second closest moon of Jupiter.  It's claim to fame is being
+Europa is the second closest moon of Jupiter.  It\'s claim to fame is being
 one of the smoothest objects in the solar system, with very few craters.  The
 surface of Europa is made of solid water ice, and some models suggest a deep
 liquid water ocean beneath the surface.  Such an ocean may be the most likely
@@ -94,7 +96,7 @@ Learn more at: http://en.wikipedia.org/wiki/Europa_%28moon%29
 Ganymede is the third Galliean satelite, and the 7th moon of Jupiter.  It is
 the largest satelite of any planet in our Solar System.  Ganymede is known to
 have both a salt water ocean, and is the only moon in the Solar System to have
-generate it's own magnetic field.\n
+generate it\'s own magnetic field.\n
 \n\
 Learn more at: http://en.wikipedia.org/wiki/Ganymede_%28moon%29
 </string>
@@ -105,7 +107,7 @@ Learn more at: http://en.wikipedia.org/wiki/Ganymede_%28moon%29
 \n\
 Callisto is the outer most of the Galliean satelites.  While smaller than Ganymede
 it is still nearly the size of the planet Mercury.  Like our moon, Callisto is tidally
-locked to it's planet, so the same side always faces Jupiter.  Because of Callisto's 
+locked to it\'s planet, so the same side always faces Jupiter.  Because of Callisto\'s 
 distance from Jupiter it has relatively low radiation levels compared to the inner moons,
 and thus would be a reasonable candidate for a manned base to explore the Jupiter
 system.\n

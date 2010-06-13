@@ -1,7 +1,7 @@
 package net.dague.astro.sim;
 
+import android.util.Log;
 import net.dague.astro.jupiter.JovianMoons;
-import net.dague.astro.util.RiseCalculator;
 import net.dague.astro.util.SkyCoords;
 import net.dague.astro.util.TimeUtil;
 import net.dague.astro.util.Vector3;
@@ -16,6 +16,7 @@ public class JupiterSim {
 	public double riseTime(double lat, double lon, double jd)
 	{
 		SkyCoords jupiter = new SkyCoords(sim.calcPosition(SolarSim.EARTH, jd), sim.calcPosition(SolarSim.JUPITER, jd));
+		Log.i("IO", jupiter.toString());
 		RiseCalculator rc = new RiseCalculator(lat, lon);
 		return rc.riseTime(jupiter, jd);
 	}
@@ -23,6 +24,7 @@ public class JupiterSim {
 	public double setTime(double lat, double lon, double jd)
 	{
 		SkyCoords jupiter = new SkyCoords(sim.calcPosition(SolarSim.EARTH, jd), sim.calcPosition(SolarSim.JUPITER, jd));
+		Log.i("IO", jupiter.toString());
 		RiseCalculator rc = new RiseCalculator(lat, lon);
 		return rc.setTime(jupiter, jd);
 	}

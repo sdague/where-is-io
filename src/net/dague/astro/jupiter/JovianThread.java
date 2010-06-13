@@ -1,5 +1,7 @@
 package net.dague.astro.jupiter;
 
+import java.util.List;
+
 import net.dague.astro.R;
 import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.AstroConst;
@@ -15,6 +17,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -70,6 +74,8 @@ public class JovianThread extends Thread {
 	private JovianCalculator calc;
 	private Paint timeLine;
 	private Paint timeText;
+	double lat = -10;
+	double lon = 10;
 	long now;
 	
     public JovianThread(SurfaceHolder surfaceHolder, Context context, JovianCalculator calc) {
@@ -84,7 +90,7 @@ public class JovianThread extends Thread {
         	public void handleMessage(Message m) {
         		this.removeMessages(0);
         		if (running) {
-        			Log.i("IO","About to draw");
+        			// Log.i("IO","About to draw");
         			draw();
         			if (state == DONE) {
         				sendEmptyMessageDelayed(0, 30000);
@@ -102,6 +108,11 @@ public class JovianThread extends Thread {
 		now = System.currentTimeMillis();
 		lastFrameTime = now;
 		setupPaint();
+		
+
+    	double[] gps = getGPS();
+    	lat = gps[0];
+    	lon = gps[1];
     }
     
 	private void setupPaint()
@@ -187,8 +198,36 @@ public class JovianThread extends Thread {
 
 	public void setRunning(boolean b) {
         running = b;
+        if (running) {
+        	double[] gps = getGPS();
+        	lat = gps[0];
+        	lon = gps[1];
+        	Log.i("GPS", "Lat: " + lat + ", Lon: " + lon);
+        }
     }
     
+	private double[] getGPS() {  
+		LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);    
+		List<String> providers = lm.getProviders(true);  
+		
+		/* Loop over the array backwards, and if you get an accurate location, then break out the loop*/  
+		Location l = null;  
+		Log.i("GPS", "Numer of providers: " + providers.size());
+  
+		for (int i=providers.size()-1; i>=0; i--) {  
+			Log.i("GPS", "Location provider: " + providers.get(i));
+			l = lm.getLastKnownLocation(providers.get(i)); 
+			if (l != null) break;  
+		}  
+    
+		double[] gps = new double[2];  
+		if (l != null) {  
+			gps[0] = l.getLatitude();  
+			gps[1] = l.getLongitude(); 
+		}  
+		return gps;  
+	}  
+	
     public void setSurfaceSize(int width, int height) {
         // synchronized to make sure these all change atomically
         synchronized (surfaceHolder) {
@@ -386,8 +425,6 @@ public class JovianThread extends Thread {
 		float x2 = (float) au2xpos(au2);
 		float y1 = time2y(TimeUtil.JD2mils(jd1));
 		float y2 = time2y(TimeUtil.JD2mils(jd2));
-//		float x3 = x2 + (x2 - x1) / (y2 - y1) / 2;
-//		float y3 = y2 + (x2 - x1) / (y2 - y1) / 2;
 		map.addPoint((int)x1, (int)y1, s);
 		c.drawLine(x1, y1, x2, y2, p);
 	}

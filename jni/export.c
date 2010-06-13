@@ -14,6 +14,26 @@
 #include <jni.h>
 // #include "ArrayHandler.h"
 
+jdoubleArray Java_net_dague_astro_sim_SolarSim_mercuryCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double mercury[3];
+    get_mercury_helio_coordsv(jd, mercury);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) mercury );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_venusCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double venus[3];
+    get_venus_helio_coordsv(jd, venus);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) venus );
+
+    return answer;
+}
+
 jdoubleArray Java_net_dague_astro_sim_SolarSim_earthCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double earth[3];
     get_earth_helio_coordsv(jd, earth);
@@ -24,12 +44,53 @@ jdoubleArray Java_net_dague_astro_sim_SolarSim_earthCoords(JNIEnv *env, jobject 
     return answer;
 }
 
+jdoubleArray Java_net_dague_astro_sim_SolarSim_marsCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double mars[3];
+    get_mars_helio_coordsv(jd, mars);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) mars );
+
+    return answer;
+}
+
+
 jdoubleArray Java_net_dague_astro_sim_SolarSim_jupiterCoords(JNIEnv *env, jobject jobj, jdouble jd) {
     double jupiter[3];
     get_jupiter_helio_coordsv(jd, jupiter);
 
     jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
     (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) jupiter ); 
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_saturnCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double saturn[3];
+    get_saturn_helio_coordsv(jd, saturn);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) saturn );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_uranusCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double uranus[3];
+    get_uranus_helio_coordsv(jd, uranus);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) uranus );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_neptuneCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double neptune[3];
+    get_neptune_helio_coordsv(jd, neptune);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) neptune );
 
     return answer;
 }

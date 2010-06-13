@@ -37,6 +37,7 @@ import static net.dague.astro.data.Constants.*;
 
 public class SolarSim {
 	
+	public static final int SUN = 0;
 	public static final int MERCURY = 1;
 	public static final int VENUS = 2;
 	public static final int EARTH = 3;
@@ -46,10 +47,19 @@ public class SolarSim {
 	public static final int EUROPA = 52;
 	public static final int GANYMEDE = 53;
 	public static final int CALLISTO = 54;
+	public static final int SATURN = 6;
+	public static final int URANUS = 7;
+	public static final int NEPTUNE = 8;
 
 	// native double[] returnJD(double jd);
+	native double[] mercuryCoords(double jd);
+	native double[] venusCoords(double jd);
 	native double[] earthCoords(double jd);
+	native double[] marsCoords(double jd);
 	native double[] jupiterCoords(double jd);
+	native double[] saturnCoords(double jd);
+	native double[] uranusCoords(double jd);
+	native double[] neptuneCoords(double jd);
 	native double[] ioCoords(double jd);
 	native double[] europaCoords(double jd);
 	native double[] ganymedeCoords(double jd);
@@ -60,10 +70,25 @@ public class SolarSim {
 	public Vector3 calcPosition(int body, double jd)
 	{
 		switch(body) { 
+		case SUN:
+			// the sun is cannonically 0
+			return new Vector3();
+		case MERCURY:
+			return new Vector3(mercuryCoords(jd));
+		case VENUS:
+			return new Vector3(venusCoords(jd));		
 		case EARTH:
 			return new Vector3(earthCoords(jd));
+		case MARS:
+			return new Vector3(marsCoords(jd));		
 		case JUPITER:
 			return new Vector3(jupiterCoords(jd));
+		case SATURN:
+			return new Vector3(saturnCoords(jd));		
+		case URANUS:
+			return new Vector3(uranusCoords(jd));		
+		case NEPTUNE:
+			return new Vector3(neptuneCoords(jd));		
 		case IO:
 			return new Vector3(ioCoords(jd));
 		case EUROPA:
