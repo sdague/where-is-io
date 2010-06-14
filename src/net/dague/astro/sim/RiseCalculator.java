@@ -75,6 +75,7 @@ public class RiseCalculator {
 		while (m < 0) { m += 1.0; }
 		while (m > 1) { m -= 1.0; }
 
+		Log.i("IO", "Lon: " + lon + ", Siderial: " + sdt);
 		Log.i("IO", "Skycoords: " + s.toString());
 		Log.i("IO", "Transit: " + m);
 		

@@ -49,13 +49,13 @@ public class TimeUtil {
 
 	public static long JD2mils(double jd, TimeZone tz) {
 		long mils = JD2mils(jd);
-		return mils + tz.getOffset(mils);
+		return mils - tz.getOffset(mils);
 	}
 
 	
 	public static double JDfloor(double jd)
 	{
-		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		c.setTimeInMillis(TimeUtil.JD2mils(jd));
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -69,9 +69,12 @@ public class TimeUtil {
 	
 	public static double JD2sideral(double jd) {
 		double T = (jd - 2451545.0) / 36525;
-		double sid = 100.46061837 + 36000.770053608 * T + 
-			0.000387933 * T * T + T * T * T / 38710000;
+		double sid = 100.46061837 + (36000.770053608 * T) + 
+			(0.000387933 * T * T) + (T * T * T / 38710000);
 		sid = sid % 360.0;
+		if (sid < 360) {
+			sid += 360;
+		}
 		return sid;
 	}
 	

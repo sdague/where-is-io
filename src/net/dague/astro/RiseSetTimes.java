@@ -27,24 +27,28 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         setContentView(R.layout.riseset);
         
         double gps[] = getGPS();
+
         
         double now = TimeUtil.mils2JD(System.currentTimeMillis());
         // set now for the example program
-        now = 2447240.5;
+        // now = 2447240.5;
+        // gps[0] = 42.3333;
+        // gps[1] = -71.0833;
         
         RiseCalculator rs = new RiseCalculator(gps[0], gps[1]);
         
         // Get us these as del
-        double JupiterRise = rs.riseTime(SolarSim.VENUS, now);
-        double JupiterSet = rs.setTime(SolarSim.VENUS, now);
+        double JupiterRise = rs.riseTime(SolarSim.JUPITER, now);
+        double JupiterSet = rs.setTime(SolarSim.JUPITER, now);
         DateFormat df = DateFormat.getInstance();
 
-        TimeZone tz = TimeZone.getDefault();
+        TimeZone utc = TimeZone.getTimeZone("UTC");
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
         
-        Calendar jscal = Calendar.getInstance();
-        jscal.setTimeInMillis(TimeUtil.JD2mils(JupiterSet, tz));
-        Calendar jrcal = Calendar.getInstance();
-        jrcal.setTimeInMillis(TimeUtil.JD2mils(JupiterRise, tz));
+        Calendar jscal = Calendar.getInstance(utc);
+        jscal.setTimeInMillis(TimeUtil.JD2mils(JupiterSet));
+        Calendar jrcal = Calendar.getInstance(utc);
+        jrcal.setTimeInMillis(TimeUtil.JD2mils(JupiterRise));
         
         
         TextView jrise = (TextView) findViewById(R.id.jupiter_rise);
@@ -56,10 +60,10 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         // Sun now
         double SunRise = rs.riseTime(SolarSim.SUN, now);
         double SunSet = rs.setTime(SolarSim.SUN, now);
-        Calendar sscal = Calendar.getInstance();
-        sscal.setTimeInMillis(TimeUtil.JD2mils(SunSet, tz));
-        Calendar srcal = Calendar.getInstance();
-        srcal.setTimeInMillis(TimeUtil.JD2mils(SunRise, tz));        
+        Calendar sscal = Calendar.getInstance(utc);
+        sscal.setTimeInMillis(TimeUtil.JD2mils(SunSet));
+        Calendar srcal = Calendar.getInstance(utc);
+        srcal.setTimeInMillis(TimeUtil.JD2mils(SunRise));        
         
         TextView srise = (TextView) findViewById(R.id.sun_rise);
         srise.setText("Sun Rise: " + df.format(srcal.getTime()));
