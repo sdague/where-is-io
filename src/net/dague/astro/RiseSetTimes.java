@@ -29,11 +29,11 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         double gps[] = getGPS();
 
         
-        double now = TimeUtil.mils2JD(System.currentTimeMillis());
+        double now = TimeUtil.JDfloor(TimeUtil.mils2JD(System.currentTimeMillis()));
         // set now for the example program
         // now = 2447240.5;
-        // gps[0] = 42.3333;
-        // gps[1] = -71.0833;
+        gps[0] = 42.3333;
+        gps[1] = -71.0833;
         
         RiseCalculator rs = new RiseCalculator(gps[0], gps[1]);
         
@@ -44,6 +44,7 @@ public class RiseSetTimes extends Activity implements OnClickListener {
 
         TimeZone utc = TimeZone.getTimeZone("UTC");
         TimeZone tz = TimeZone.getTimeZone("America/New_York");
+        df.setTimeZone(tz);
         
         Calendar jscal = Calendar.getInstance(utc);
         jscal.setTimeInMillis(TimeUtil.JD2mils(JupiterSet));

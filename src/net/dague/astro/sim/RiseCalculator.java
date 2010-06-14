@@ -15,8 +15,8 @@ import android.util.Log;
 
 public class RiseCalculator {
 	
-	final static double SUN_OFFSET = Convert.deg2rad(-0.5667);
-	final static double OFFSET = Convert.deg2rad(-0.8333);
+	final static double SUN_OFFSET = Convert.deg2rad(-0.8333);
+	final static double OFFSET = Convert.deg2rad(-0.5667);
 	
 	double lat;
 	double lon;
