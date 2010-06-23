@@ -1,6 +1,8 @@
 package net.dague.astro;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -20,59 +22,69 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class RiseSetTimes extends Activity implements OnClickListener {
-	
 
+	private void fillRiseTime(int id, int body, double now)
+	{
+		double rise = rs.riseTime(body, now);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(TimeUtil.JD2mils(rise));
+        
+        TextView view = (TextView) findViewById(id);
+        view.setText("Rise: " + df.format(cal.getTime()));
+	}
+	
+	private void fillSetTime(int id, int body, double now)
+	{
+		double set = rs.setTime(body, now);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(TimeUtil.JD2mils(set));
+
+        TextView view = (TextView) findViewById(id);
+        view.setText("Set: " + df.format(cal.getTime()));
+	}
+
+	SimpleDateFormat df;
+	RiseCalculator rs;
+	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.riseset);
         
+        df = new SimpleDateFormat("h:mm a");
+        
         double gps[] = getGPS();
-
+        
+        rs = new RiseCalculator(gps[0], gps[1]);
         
         double now = TimeUtil.JDfloor(TimeUtil.mils2JD(System.currentTimeMillis()));
-        // set now for the example program
-        // now = 2447240.5;
-        gps[0] = 42.3333;
-        gps[1] = -71.0833;
-        
-        RiseCalculator rs = new RiseCalculator(gps[0], gps[1]);
-        
-        // Get us these as del
-        double JupiterRise = rs.riseTime(SolarSim.JUPITER, now);
-        double JupiterSet = rs.setTime(SolarSim.JUPITER, now);
-        DateFormat df = DateFormat.getInstance();
 
-        TimeZone utc = TimeZone.getTimeZone("UTC");
-        TimeZone tz = TimeZone.getTimeZone("America/New_York");
-        df.setTimeZone(tz);
+        // The Sun
+        fillRiseTime(R.id.sun_rise, SolarSim.SUN, now);
+        fillSetTime(R.id.sun_set, SolarSim.SUN, now);
         
-        Calendar jscal = Calendar.getInstance(utc);
-        jscal.setTimeInMillis(TimeUtil.JD2mils(JupiterSet));
-        Calendar jrcal = Calendar.getInstance(utc);
-        jrcal.setTimeInMillis(TimeUtil.JD2mils(JupiterRise));
+        fillRiseTime(R.id.mercury_rise, SolarSim.MERCURY, now);
+        fillSetTime(R.id.mercury_set, SolarSim.MERCURY, now);
         
+        fillRiseTime(R.id.venus_rise, SolarSim.VENUS, now);
+        fillSetTime(R.id.venus_set, SolarSim.VENUS, now);
         
-        TextView jrise = (TextView) findViewById(R.id.jupiter_rise);
-        jrise.setText("Jupiter Rise: " + df.format(jrcal.getTime()));
+        fillRiseTime(R.id.mars_rise, SolarSim.MARS, now);
+        fillSetTime(R.id.mars_set, SolarSim.MARS, now);
 
-        TextView jset = (TextView) findViewById(R.id.jupiter_set);
-        jset.setText("Jupiter Set: " + df.format(jscal.getTime()));
-
-        // Sun now
-        double SunRise = rs.riseTime(SolarSim.SUN, now);
-        double SunSet = rs.setTime(SolarSim.SUN, now);
-        Calendar sscal = Calendar.getInstance(utc);
-        sscal.setTimeInMillis(TimeUtil.JD2mils(SunSet));
-        Calendar srcal = Calendar.getInstance(utc);
-        srcal.setTimeInMillis(TimeUtil.JD2mils(SunRise));        
+        fillRiseTime(R.id.jupiter_rise, SolarSim.JUPITER, now);
+        fillSetTime(R.id.jupiter_set, SolarSim.JUPITER, now);
         
-        TextView srise = (TextView) findViewById(R.id.sun_rise);
-        srise.setText("Sun Rise: " + df.format(srcal.getTime()));
-
-        TextView sset = (TextView) findViewById(R.id.sun_set);
-        sset.setText("Sun Set: " + df.format(sscal.getTime()));
+        fillRiseTime(R.id.saturn_rise, SolarSim.SATURN, now);
+        fillSetTime(R.id.saturn_set, SolarSim.SATURN, now);
         
-        // Set up click listeners for all the buttons
+        fillRiseTime(R.id.uranus_rise, SolarSim.URANUS, now);
+        fillSetTime(R.id.uranus_set, SolarSim.URANUS, now);
+
+        fillRiseTime(R.id.neptune_rise, SolarSim.NEPTUNE, now);
+        fillSetTime(R.id.neptune_set, SolarSim.NEPTUNE, now);
+
+        
+                // Set up click listeners for all the buttons
 //        View continueButton = findViewById(R.id.continue_button);
 //        continueButton.setOnClickListener(this);
 //        View newButton = findViewById(R.id.new_button);
