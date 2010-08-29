@@ -17,172 +17,155 @@
     android:paddingLeft="5dp"
     android:paddingRight="10dp"
     >
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/sun_icon"
 android:src="@drawable/sun_icon" 
 />
-    <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    <TextView
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/sun_rise"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView 
+ 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/sun_set"
     />
 </TableRow>
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/mecury_icon"
 android:src="@drawable/mercury_icon" 
 />
     <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/mercury_rise"
     />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/mercury_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/venus_icon"
 android:src="@drawable/venus_icon" 
 />
     <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/venus_rise"
     />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/venus_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/moon_icon"
 android:src="@drawable/moon_icon" 
 />
     <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/moon_rise"
     />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/moon_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/mars_icon"
 android:src="@drawable/mars_icon" 
 />
     <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/mars_rise"
     />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/mars_set"
     />
 </TableRow>
 
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/jupiter_icon"
 android:src="@drawable/jupiter_icon" 
 />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/jupiter_rise"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/jupiter_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/saturn_icon"
 android:src="@drawable/saturn_icon" 
 />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/saturn_rise"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/saturn_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/uranus_icon"
 android:src="@drawable/uranus_icon" 
 />
 <TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/uranus_rise"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/uranus_set"
     />
 </TableRow>
 
-<TableRow>
+<TableRow style="@style/RiseSetRow">
 <ImageView 
 android:id="@+id/neptune_icon"
 android:src="@drawable/neptune_icon" 
 />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/neptune_rise"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+<TextView 
+    style="@style/RiseSetText"
     android:text="@string/hello"
     android:id="@+id/neptune_set"
     />

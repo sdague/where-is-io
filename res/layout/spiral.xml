@@ -4,14 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
+    <net.dague.astro.jupiter.JovianSpiralView
+    	android:id="@+id/jovian_spiral"
     />
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+
 </LinearLayout>

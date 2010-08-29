@@ -49,6 +49,9 @@ public class JovianSpiral extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // setContentView(R.layout.spiral);
+        
+        // jgv = (JovianSpiralView)findViewById(R.id.jovian_spiral);
 
         jgv = new JovianSpiralView(this);
 
