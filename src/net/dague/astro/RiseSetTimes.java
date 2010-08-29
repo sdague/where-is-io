@@ -30,7 +30,7 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         cal.setTimeInMillis(TimeUtil.JD2mils(rise));
         
         TextView view = (TextView) findViewById(id);
-        view.setText("Rise: " + df.format(cal.getTime()));
+        view.setText("" + df.format(cal.getTime()));
 	}
 	
 	private void fillSetTime(int id, int body, double now)
@@ -40,7 +40,7 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         cal.setTimeInMillis(TimeUtil.JD2mils(set));
 
         TextView view = (TextView) findViewById(id);
-        view.setText("Set: " + df.format(cal.getTime()));
+        view.setText("" + df.format(cal.getTime()));
 	}
 
 	SimpleDateFormat df;
@@ -50,7 +50,8 @@ public class RiseSetTimes extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.riseset);
         
-        df = new SimpleDateFormat("h:mm a");
+        df = new SimpleDateFormat("H:mm");
+        
         
         double gps[] = getGPS();
         

@@ -7,9 +7,11 @@
     <string name="close_label">Close</string>
     <string name="spiral_title">Jovian Spiral</string>
     <string name="riseset_title">Rise and Set times</string>
+    <string name="jupiter_text">Jupiter Moon Positions</string>
+    <string name="time_text">Rise and Set Times</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
-    <string name="about_title">About Where is Io - version 1.3</string>
+    <string name="about_title">About Where is Io - version 1.5</string>
     <string name="about_text">
 Where is Io lets you know where the 4 galliean satellites of Jupiter are
 at any given time.  Even through only 8x binoculars you can make out these

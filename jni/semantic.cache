@@ -1,0 +1,15 @@
+;; Object jni/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "jni/"
+  :tables (list 
+   (semanticdb-table "vsop87.h"
+    :major-mode 'c-mode
+    :tags '(("_VSOP87_H_" variable (:constant-flag t) nil [2142 2216]) ("VSOP87_MERCURY" variable (:constant-flag t) nil [2202 2240]) ("VSOP87_VENUS" variable (:constant-flag t) nil [2228 2264]) ("VSOP87_EMB" variable (:constant-flag t) nil [2254 2291]) ("VSOP87_MARS" variable (:constant-flag t) nil [2280 2320]) ("VSOP87_JUPITER" variable (:constant-flag t) nil [2306 2345]) ("VSOP87_SATURN" variable (:constant-flag t) nil [2332 2371]) ("VSOP87_URANUS" variable (:constant-flag t) nil [2358 2398]) ("VSOP87_NEPTUNE" variable (:constant-flag t) nil [2384 2407]) ("GetVsop87Coor" function (:prototype-flag t :arguments (("jd" variable (:type "double") (reparse-symbol arg-sub-list) [2422 2432]) ("body" variable (:type "int") (reparse-symbol arg-sub-list) [2432 2441]) ("xyz" variable (:pointer 1 :type "double") (reparse-symbol arg-sub-list) [2441 2453])) :type "void") nil [2403 2454]) ("GetVsop87OsculatingCoor" function (:prototype-flag t :arguments (("jd0" variable (:type "double") (reparse-symbol arg-sub-list) [2817 2828]) ("jd" variable (:type "double") (reparse-symbol arg-sub-list) [2828 2838]) ("body" variable (:type "int") (reparse-symbol arg-sub-list) [2838 2847]) ("xyz" variable (:pointer 1 :type "double") (reparse-symbol arg-sub-list) [2847 2859])) :type "void") nil [2788 2860]))
+    :file "vsop87.h"
+    :pointmax 2972
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0pre4"
+  :semanticdb-version "2.0pre4"
+  )
