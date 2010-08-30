@@ -4,11 +4,11 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
-	<ImageView android:id="@+id/diarama"
-							android:layout_width="310dp" android:layout_height="150dp"
+	<net.dague.astro.views.Diarama android:id="@+id/diarama"
+				android:layout_width="310dp" android:layout_height="150dp"
 				android:layout_margin="5dp"
 				android:src="@drawable/sun_icon"
-				></ImageView>
+				/>
 			
 			<Button android:id="@+id/time_button"
 				style="@style/AstroButton"
@@ -22,6 +22,7 @@
 				android:text="@string/jupiter_text"
 				>
 			</Button>
+			
 			
 			<Button android:id="@+id/about_button"
 				style="@style/AstroButton"

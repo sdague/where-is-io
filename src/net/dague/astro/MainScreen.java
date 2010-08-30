@@ -30,7 +30,7 @@ public class MainScreen extends Activity implements OnClickListener  {
 		about.setClickable(true);
 		about.setOnClickListener(this);
 		
-		ImageView diarama = (ImageView)findViewById(R.id.diarama);
+		// ImageView diarama = (ImageView)findViewById(R.id.diarama);
 	}
 
 	@Override
