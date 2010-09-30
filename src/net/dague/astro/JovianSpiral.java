@@ -87,6 +87,19 @@ public class JovianSpiral extends Activity implements OnClickListener {
 		case R.id.about:
 			startActivity(new Intent(this, About.class));
 		    return true;
+		    
+		case R.id.spiral:
+		    startActivity(new Intent(this, JovianSpiral.class));
+			this.finish();
+		    return true;
+		    
+		case R.id.riseset:
+			startActivity(new Intent(this, RiseSetTimes.class));
+			this.finish();
+			return true;
+			
+		case R.id.quit:
+			this.finish();
 		}
 		
 		return false;

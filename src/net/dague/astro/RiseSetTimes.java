@@ -13,6 +13,7 @@ import net.dague.astro.sim.SolarSim;
 import net.dague.astro.util.TimeUtil;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
@@ -20,6 +21,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class RiseSetTimes extends Activity implements OnClickListener {
 
@@ -95,6 +99,36 @@ public class RiseSetTimes extends Activity implements OnClickListener {
 //        View exitButton = findViewById(R.id.exit_button);
 //        exitButton.setOnClickListener(this);
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about:
+			startActivity(new Intent(this, About.class));
+		    return true;
+
+        case R.id.spiral:
+		    startActivity(new Intent(this, JovianSpiral.class));
+			this.finish();
+		    return true;
+		    
+		case R.id.riseset:
+			startActivity(new Intent(this, RiseSetTimes.class));
+			this.finish();
+			return true;
+			
+		case R.id.quit:
+			this.finish();
+		}
+		
+		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		   super.onCreateOptionsMenu(menu);
+		   MenuInflater inflater = getMenuInflater();
+		   inflater.inflate(R.menu.menu, menu);
+		   return true;
+		}
 
 	private double[] getGPS() {  
 

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item android:id="@+id/riseset"
+      android:title="@string/riseset_title" />
+   <item android:id="@+id/spiral"
+      android:title="@string/spiral_title" />
    <item android:id="@+id/about"
       android:title="@string/about_label"
       android:alphabeticShortcut="@string/about_shortcut" />
+   <item android:id="@+id/quit"
+	  android:title="Quit" />
 </menu>
       
