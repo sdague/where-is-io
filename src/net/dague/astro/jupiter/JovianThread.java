@@ -85,7 +85,7 @@ public class JovianThread extends Thread {
         //this.handler = handler;
         this.context = context;
         this.calc = calc;
-        
+       
         handler = new Handler() {
         	public void handleMessage(Message m) {
         		this.removeMessages(0);

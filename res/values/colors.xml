@@ -11,5 +11,6 @@
 <color name="moon">#ffffffff</color>
 <color name="timeline">#33ffffff</color>
 <color name="button_background">#aa888888</color>
+<color name="ground">#ff1CA516</color>
 	
 </resources>

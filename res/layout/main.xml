@@ -5,11 +5,11 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
 	<net.dague.astro.views.Diarama android:id="@+id/diarama"
-				android:layout_width="310dp" android:layout_height="150dp"
+				android:layout_width="fill_parent" android:layout_height="150dp"
 				android:layout_margin="5dp"
 				android:src="@drawable/sun_icon"
 				/>
-			
+	
 			<Button android:id="@+id/time_button"
 				style="@style/AstroButton"
 				android:text="@string/time_text"
