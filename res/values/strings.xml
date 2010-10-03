@@ -11,35 +11,47 @@
     <string name="time_text">Rise and Set Times</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
-    <string name="about_title">About Where is Io - version 1.5</string>
+    <string name="about_title">About Where is Io - version 2.0</string>
     <string name="about_text">
-Where is Io lets you know where the 4 galliean satellites of Jupiter are
-at any given time.  Even through only 8x binoculars you can make out these
-4 moons on nights when Jupiter is up.\n
+Where is Io is tool for showing the positions of objects in the Solar System.
+It uses your location to determine the rise and set times of the planets
+(and soon the moon) as well as the position of the 4 large moons of Jupiter.
+\n\n
+On the front page you\'ll see the Diarama which provides a quick overview of 
+what bodies are currently in the sky.  Nothing here is to scale, but it does 
+give you an idea of what\'s visible.  This is beta code, and probably won\'t work
+in the arctic and antarctic circles, where things don\'t set.
+\n\n
+The Rise and Set Times page gives you computed rise and set times for today at your
+position.
+\n\n
+The Jupiter Moon Positions page gives you a spiral view of Jupiter\'s large moons
+over time.  Even through only 8x binoculars you can make out these
+4 moons on nights when Jupiter is up.\n\n
 The portrait view shows a 4 day window of time, with the orange line 
 representing the current state.  In landscape view, you get a close up on
 the first portion of the graph (total time will vary based on the aspect
 ratio of your device).  Jupiter\'s size is slightly exagerated (2x) for aesthetics.\n
 This is a work in progress, expect to see additional functions rolled out
-over time.\n
-<b>License / Copyright</b>\n
-Copyright (c) 2010 Sean Dague\n
+over time.\n\n
+<b>License / Copyright</b>\n\n
+Copyright (c) 2010 Sean Dague\n\n
 Where is Io is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.\n
+(at your option) any later version.\n\n
 Where is Io is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.\n
+General Public License for more details.\n\n
 You should have received a copy of the GNU General Public License
-along with Where is Io.  If not, see http://www.gnu.org/licenses/.\n
-Full source code available at http://github.com/sdague/where-is-io\n
+along with Where is Io.  If not, see http://www.gnu.org/licenses/.\n\n
+Full source code available at http://github.com/sdague/where-is-io\n\n
 This software includes simulation code derived from Johannes
 Gajdosik\'s vsop87, elp82b, and l1 model implementations.  Much thanks
 to his excellent work in porting Fortran models to C and making those
-available for general use.\n
-Copyright (c) 2006 Johannes Gajdosik\n
+available for general use.\n\n
+Copyright (c) 2006 Johannes Gajdosik\n\n
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the \"Software\"),
 to deal in the Software without restriction, including without limitation
