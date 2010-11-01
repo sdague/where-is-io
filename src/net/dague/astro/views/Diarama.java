@@ -136,9 +136,21 @@ public class Diarama extends View {
 		
 		double rise = rs.riseTime(body, now);
 		double set = rs.setTime(body, now);
+		
+		// This is a bunch of who's on first moves to deal with the fact that this
+		// is a big approximation.
 		if (rise > set) {
 			rise -= 1.0;
 		}
+		
+		if (realnow > set) {
+			realnow -= 1.0;
+		}
+		
+		if (realnow < rise) {
+			realnow += 1.0;
+		}
+		
 		
 		if(realnow > rise && realnow < set) {
 			stage = (realnow - rise) / (set - rise);

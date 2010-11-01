@@ -11,7 +11,7 @@
     <string name="time_text">Rise and Set Times</string>
     <string name="about_label">About...</string>
     <string name="about_shortcut">A</string>
-    <string name="about_title">About Where is Io - version 2.0</string>
+    <string name="about_title">About Where is Io - version 2.1</string>
     <string name="about_text">
 Where is Io is tool for showing the positions of objects in the Solar System.
 It uses your location to determine the rise and set times of the planets
