@@ -2,11 +2,15 @@
 
 == Description
 
-Where is Io is an Android application for determining which moons of
-Jupiter you are currently viewing.  It numerically calculates the
-positions of all the moons as well the Earth and Jupiter, does the
-projection from Earth's perspective, and pulls it all together in a
-familiar spiral graph.
+Where is Io is an Android application that calculates many of the
+ephemeris (positions of the planets / moons) for the Solar System.  It
+originally focussed on the moons of Jupiter, but since has branched
+out to support rise and set for the planets, and more is coming.
+
+For the moons of Jupiter it numerically calculates the positions of
+all the moons as well the Earth and Jupiter, does the projection from
+Earth's perspective, and pulls it all together in a familiar spiral
+graph.
 
 This is available in the Android Market if you search for "Where is
 Io".
@@ -23,6 +27,11 @@ build environment doesn't mix super cleanly with eclipse, so if you
 want to build this yourself you'll need to mess with 
 .externalToolBuilders/JNI Builder.launch
 
+== Authors
+
+Where is Io was created by Sean Dague and includes contributions from
+Keith McGerald.
+
 == License
 
 The code for the code Android application is under GPLv3.  The
@@ -35,5 +44,6 @@ code for the application.
 
 There is also an included SunriseSunset.java which is provided by John
 Tauxe as public domain:
-http://www.neptuneandco.com/~jtauxe/bits/index.html
+http://www.neptuneandco.com/~jtauxe/bits/index.html.  This code isn't
+actually currently used, and may be removed in a future version.
 
