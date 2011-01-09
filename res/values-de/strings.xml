@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello"> </string>
+    <string name="app_name">Wo ist Io</string>
+    <string name="close_label">Schliessen</string>
+    <string name="spiral_title">Jovian Spirale</string>
+    <string name="riseset_title">Objekt Sichtbarkeit</string>
+    <string name="jupiter_text">Jupiter Mond Positionen</string>
+    <string name="time_text">Objekt Sichtbarkeit</string>
+    <string name="about_label">Über...</string>
+    <string name="about_title">Über Wo ist Io - version 2.1g</string>
+    <string name="about_text">
+Wo ist Io ist ein Tool zur Darstellung der Positionen von Objekten im Sonnensystem.
+Es verwendet Ihren Standort um die Auf-und Untergangszeiten der Planeten zu bestimmen
+(und bald des Mondes) sowie die Positionen der 4 großen Monde des Jupiter.
+\n\n
+Auf der Startseite sehen Sie ein Diarama für einen schnellen Überblick was für
+Himmelskörper derzeit zu sehen sind.  Nichts ist hier im Massstab, nur damit Sie
+eine Vorstellung von dem haben was im Moment sichtbar ist.  Das ist Beta-Code und
+wird wahrscheinlich nicht in der Arktis und Antarktis funktionieren.
+\n\n
+Die Objekt Sichtbarkeit Seite zeigt Ihnen die berechneten Auf-und Untergangszeiten der
+Planeten für Ihren aktuellen Standort. 
+\n\n
+Die Jupiter Mond Positionen Seite zeigt Ihnen eine Spirale von Jupiters grossen 4 Monden.
+Durch nur ein 8x Fernglas können Sie diese 4 Monde sehen, wenn Jupiter sichtbar ist.\n\n
+Die Portrait-Ansicht zeigt ein 4 Tage Zeitfenster, die orange Linie repräsentiert den
+aktuellen Zustand. Im Querformat erhalten Sie eine Nahaufnahme des ersten Teils des Graphen
+(Aspekt variiert abhängig von Ihrem Gerät).  
+Jupiters Darstellung ist vergrössert (2x) für die Ästhetik.\n
+Dies ist eine laufende Arbeit, zusätzliche Funktionen werden über die Zeit neu hinzugefügt.
+\n\n
+<b>License / Copyright</b>\n\n
+Copyright (c) 2010 Sean Dague\n\n
+German Translation by Martin Stähling\n\n
+Wo ist Io ist freie Software. Sie können es unter den Bedingungen der GNU General Public
+License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren,
+entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n\n
+Die Veröffentlichung von Wo ist Io erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird,
+aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der
+VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n\n
+Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben.
+Falls nicht, siehe http://www.gnu.org/licenses/\n\n
+Quellcode der Übersetzung unter http://sourceforge.net/projects/androidio/\n\n
+Original Quellcode unter http://github.com/sdague/where-is-io\n\n
+Where is Io is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.\n\n
+Where is Io is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.\n\n
+You should have received a copy of the GNU General Public License
+along with Where is Io.  If not, see http://www.gnu.org/licenses/.\n\n
+Full source code available at http://github.com/sdague/where-is-io\n\n
+Translated German source code at http://sourceforge.net/projects/androidio/\n\n
+This software includes simulation code derived from Johannes
+Gajdosik\'s vsop87, elp82b, and l1 model implementations.  Much thanks
+to his excellent work in porting Fortran models to C and making those
+available for general use.\n\n
+Copyright (c) 2006 Johannes Gajdosik\n\n
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the \"Software\"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:\n
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+    </string>
+    <string name="jupiter_details">\
+<b>Durchmesser:</b> 142.800 km\n\
+<b>Masse:</b> 317.8 Erdmassen\n
+<b>Temp:</b> -108 Grad Celsius\n
+\n\
+Jupiter ist mit einem Äquatordurchmesser von 142.800 Kilometern der größte
+Planet des Sonnensystems. Er ist mit einer durchschnittlichen Entfernung von
+778 Millionen Kilometern von der Sonne aus gesehen der fünfte Planet.\n
+\n\
+Jupiter ist nachts von der Erde aus mit bloßem Auge zu erkennen. Die Galileischen
+Monde können schon mit einem Fernglass mit 8 fach Vergrösserung gesehen werden.
+\n\
+Mehr bei: http://de.wikipedia.org/wiki/Jupiter_(Planet%29
+</string>
+<string name="io_details">\
+<b>Durchmesser:</b> 3643 km\n\
+<b>Jupiterabstand:</b> 421.600 km\n\
+<b>Temp:</b> -143 Grad Celsius\n\
+\n\
+Io ist der innerste der vier großen Monde des Planeten Jupiter und mit einem
+Durchmesser von 3643 km der drittgrößte Mond Jupiters und der viertgrößte Mond
+des Sonnensystems. Seine Besonderheit ist ein extremer Vulkanismus, der von
+keinem anderen Himmelskörper im Sonnensystem überboten wird.\n
+\n\
+Mehr bei: http://de.wikipedia.org/wiki/Io_%28Mond%29
+</string>
+<string name="europa_details">\
+<b>Durchmesser:</b> 3121 km\n\
+<b>Jupiterabstand:</b> 670.900 km\n\
+<b>Temp:</b> -160 Grad Celsius\n\
+\n\
+Europa ist mit einem Durchmesser von 3121 km der zweitinnerste und kleinste der
+vier großen Monde des Planeten Jupiter und der sechstgrößte im Sonnensystem.
+Die Oberfläche ist außergewöhnlich eben. Es wird vermutet, dass sich unter
+Europas Kruste aus Wassereis ein Ozean aus flüssigem Wasser befindet,
+der durch die Wirkung von Gezeitenkräften erwärmt wird. Das mögliche
+Vorhandensein von flüssigem Wasser ließ Spekulationen darüber aufkommen,
+ob in Europas Ozeanen Formen von Leben existieren können.\n
+\n\
+Mehr bei: http://de.wikipedia.org/wiki/Europa_%28Mond%29
+</string>
+<string name="ganymede_details">\
+<b>Durchmesser:</b> 5262 km\n\
+<b>Jupiterabstand:</b> 1.070.000 km\n\
+<b>Temp:</b> -165 Grad Celsius\n\
+\n\
+Ganymed ist der dritte und mit einem Durchmesser von 5262 km der größte der vier
+großen Monde des Planeten Jupiter. Er ist noch vor Titan der größte Mond des
+Sonnensystems und größer als der Planet Merkur. Ganymeds Oberfläche besteht aus
+zwei kontinentalen Platten, die sich unabhängig voneinander bewegen, wobei an
+ihren Randzonen Gebirgszüge aufgeworfen werden können. Er besteht aus einem
+Eisenkern, einem Felsmantel und einem Eismantel. Außerdem besitzt er ein eigenes
+Magnetfeld.\n
+\n\
+Mehr bei: http://de.wikipedia.org/wiki/Ganymed_%28Mond%29
+</string>
+<string name="callisto_details">\
+<b>Durchmesser:</b> 4821 km\n\
+<b>Jupiterabstand:</b> 1.883.000 km\n\
+<b>Temp:</b> -150 Grad Celsius\n\
+\n\
+Kallisto hat einen Durchmesser von 4821 km und ist damit fast exakt genauso groß
+wie der Planet Merkur. Es ist der zweitgrößte und äußerste der vier großen Monde
+des Planeten Jupiter und der drittgrößte Mond des Sonnensystems. Kallisto weist
+die höchste Dichte an Impaktkratern im ganzen Sonnensystem auf. Krater und bei deren
+Einschlag entstandene konzentrische ringförmige Erhebungen prägen die Oberfläche;
+größere Gebirgszüge sind nicht vorhanden. Dies lässt darauf schließen, dass
+Kallistos Oberfläche überwiegend aus Wassereis zusammengesetzt ist. Beobachtungen
+weisen darauf hin, dass Kallisto eine äußerst dünne Atmosphäre aus Kohlendioxid
+besitzt. Kallisto gilt als mögliches Ziel der bemannten Raumfahrt für die Zeit nach
+einem bemannten Marsflug, da er außerhalb des Strahlengürtels um den Jupiter liegt.\n
+\n\
+Mehr bei: http://de.wikipedia.org/wiki/Kallisto_%28Mond%29
+</string>
+</resources>

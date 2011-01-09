@@ -29,21 +29,17 @@ want to build this yourself you'll need to mess with
 
 == Authors
 
-Where is Io was created by Sean Dague and includes contributions from
-Keith McGerald.
+Sean Dague - maintainer
+
+Additional Contributors:
+ * Keith McGerald
+ * Martin Staehling
 
 == License
 
-The code for the code Android application is under GPLv3.  The
-application includes 2 additional sources of code.
+The code for the code Android application is under GPLv3.
 
-The main simulator is the work of Johannes Gajdosik as found in the
+The application also includes the work of Johannes Gajdosik as found in the
 Stellarium source tree.  Those files are provided under the revised
 BSD license that they are licensed under.  I did a jni wrapper on this
 code for the application.
-
-There is also an included SunriseSunset.java which is provided by John
-Tauxe as public domain:
-http://www.neptuneandco.com/~jtauxe/bits/index.html.  This code isn't
-actually currently used, and may be removed in a future version.
-
