@@ -60,10 +60,22 @@ public class SolarSim {
 	native double[] saturnCoords(double jd);
 	native double[] uranusCoords(double jd);
 	native double[] neptuneCoords(double jd);
+	
+	// jupiter's moons
 	native double[] ioCoords(double jd);
 	native double[] europaCoords(double jd);
 	native double[] ganymedeCoords(double jd);
 	native double[] callistoCoords(double jd);
+	
+	// saturn's moons
+	native double[] mimasCoords(double jd);
+	native double[] enceladusCoords(double jd);
+	native double[] tethysCoords(double jd);
+	native double[] dioneCoords(double jd);
+	native double[] rheaCoords(double jd);
+	native double[] titanCoords(double jd);
+	native double[] hyperionCoords(double jd);
+	native double[] iapetusCoords(double jd);
 	
 	public SolarSim() {}
 	
@@ -88,7 +100,8 @@ public class SolarSim {
 		case URANUS:
 			return new Vector3(uranusCoords(jd));		
 		case NEPTUNE:
-			return new Vector3(neptuneCoords(jd));		
+			return new Vector3(neptuneCoords(jd));
+		// Jupiter's moons
 		case IO:
 			return new Vector3(ioCoords(jd));
 		case EUROPA:
@@ -97,6 +110,7 @@ public class SolarSim {
 			return new Vector3(ganymedeCoords(jd));
 		case CALLISTO:
 			return new Vector3(callistoCoords(jd));
+		// Saturn's moons
 		default:
 			return new Vector3();
 		}

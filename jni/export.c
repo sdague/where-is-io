@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "l1.h"
+#include "tass17.h"
 
 #include <jni.h>
 // #include "ArrayHandler.h"
@@ -132,6 +133,90 @@ jdoubleArray Java_net_dague_astro_sim_SolarSim_callistoCoords(JNIEnv *env, jobje
 
     jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
     (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) callisto ); 
+
+    return answer;
+}
+
+/**
+ * Saturn's Moons
+ */
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_mimasCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double mimas[3];
+    get_mimas_parent_coordsv(jd, mimas);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) mimas );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_enceladusCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double enceladus[3];
+    get_enceladus_parent_coordsv(jd, enceladus);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) enceladus );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_tethysCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double tethys[3];
+    get_tethys_parent_coordsv(jd, tethys);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) tethys );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_dioneCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double dione[3];
+    get_dione_parent_coordsv(jd, dione);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) dione );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_rheaCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double rhea[3];
+    get_rhea_parent_coordsv(jd, rhea);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) rhea );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_titanCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double titan[3];
+    get_titan_parent_coordsv(jd, titan);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) titan );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_hyperionCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double hyperion[3];
+    get_hyperion_parent_coordsv(jd, hyperion);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) hyperion );
+
+    return answer;
+}
+
+jdoubleArray Java_net_dague_astro_sim_SolarSim_iapetusCoords(JNIEnv *env, jobject jobj, jdouble jd) {
+    double iapetus[3];
+    get_iapetus_parent_coordsv(jd, iapetus);
+
+    jdoubleArray answer = (*env)->NewDoubleArray(env, 3);
+    (*env)->SetDoubleArrayRegion( env, answer, 0, 3, (const jdouble*) iapetus );
 
     return answer;
 }
