@@ -17,7 +17,7 @@ Where is Io is tool for showing the positions of objects in the Solar System.
 It uses your location to determine the rise and set times of the planets
 (and soon the moon) as well as the position of the 4 large moons of Jupiter.
 \n\n
-On the front page you\'ll see the Diarama which provides a quick overview of 
+On the front page you\'ll see the Diorama which provides a quick overview of 
 what bodies are currently in the sky.  Nothing here is to scale, but it does 
 give you an idea of what\'s visible.  This is beta code, and probably won\'t work
 in the arctic and antarctic circles, where things don\'t set.
